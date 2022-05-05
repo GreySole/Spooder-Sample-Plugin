@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="osc-bundle.js"></script>
+		<script type="text/javascript" src="sample.js"></script>
+	</head>
+	<body>
+		<div class="sample-main">
+            <div id="sampleInfo">
+                Hey there! You made it to the sample overlay. This template has all you need to start making a browser overlay for Spooder.<br>
+                Here's what's included in the bundle:<br><br>
+                    sendOSC(address, content) - You can call this anywhere in your overlay<br>
+                    getOSCMessage(message) - *Required* Write this function to make all your OSC triggers<br>
+                    onOSCOpen() - *Optional* This function triggers when the OSC module opens.<br>
+                    then write a trigger for '/sampleplugin/connect/success' in the getOSCMessage function<br>
+            </div>
+            <br>
+            <div id="oscInfo">
+            </div>
+        </div>
+	</body>
+</html>

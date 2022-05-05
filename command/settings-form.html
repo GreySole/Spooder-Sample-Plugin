@@ -1,0 +1,55 @@
+<!--
+    A plugin's settings form gets injected into the web UI as HTML.
+    Here you can mark up any type of form element to put in the settings.json.
+    Use these attributes to tell the web UI what is what.
+
+    Essentially, any element with the 'name' attribute will be saved to the root of the JSON file.
+    
+    Subforms are a collection of values to be cloned and added to an object.
+    - 'varname' will be the object name on the root level of the JSON file.
+    - 'subname' defines the subform name in case of multiple subforms
+    - 'subvar' works just like 'name', but for subforms
+
+    The 'assetselect' attribute is a 'select' field that'll be auto-filled
+    with the plugin's assets found in its overlay folder. 
+
+    The 'udpselect' attribute is also a 'select' field that'll be auto-filled
+    by your Spooder's udp clients.
+-->
+
+<form id='settingsForm' class='settings-form'>
+    <!--Alert method is used in the OSC bundle in overlays. If set to 'external' the overlay
+        will send an OSC message for alert box plugins.-->
+    <label class="heading">Alert Method
+        <select name='alertmethod'>
+            <option value='internal'>Internal</option>
+            <option value='external'>External</option>
+        </select>
+    </label>
+    
+    <div class="settings-subform" varname="samplesub">
+        <label class="heading">Sample Subform
+            <div class="subform" subname="samplesub-form">
+                <div class="subform-container">
+                    <!--You'll need a keyname for the next level inside the JSON file.
+                        This can be the command name for chat and events-->
+                    <label>Key Name
+                        <input subvar="keyname" type="input"/>
+                    </label>
+                    <label>Asset Select
+                        <select subvar='asset' id='asset-input' assetselect></select>
+                    </label>
+                    <label>UDP Client select
+                        <select subvar='udp' id='udp-input' udpselect></select>
+                    </label>
+                    <label>Number
+                        <input type="number" subvar='number' id='number-input' />
+                    </label>
+                    <button type="button" class="delete-button">X</button>
+                </div>
+            </div>
+        </label>
+        <button type="button" class="add-button">+</button>
+    </div>
+    
+</form>
