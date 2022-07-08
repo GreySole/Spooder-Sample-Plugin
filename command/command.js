@@ -9,6 +9,14 @@ class SamplePlugin {
 		this.onEvent = this.onEvent.bind(this);
 	}
 	
+	//Plugin modmaps only contain locks for now.
+	//Locks are simple on/off values that can be toggled in the mod UI.
+	modmap = {
+		locks:{
+			samplecommand:0
+		}
+	}
+	
 	/*List all your commands here to be accessible through the help command*/
 	commandList = {
 		"samplecommand":"Call the help command with the event and this command like '!help sampleplugin samplecommand' to get this description"
