@@ -11,8 +11,8 @@
                 Here's what's included in the bundle:<br><br>
                     sendOSC(address, content) - You can call this anywhere in your overlay<br>
                     getOSCMessage(message) - *Required* Write this function to make all your OSC triggers<br>
-                    onOSCOpen() - *Optional* This function triggers when the OSC module opens.<br>
-                    then write a trigger for '/sampleplugin/connect/success' in the getOSCMessage function<br>
+                    onConnect() - *Optional* This function triggers when the overlay receives /connect/success from the Spooder<br>
+                    isExternal:boolean - This will tell whether the overlay is accessed locally or through the internet (e.g. Ngrok)<br>
             </div>
             <br>
             <div id="oscInfo">

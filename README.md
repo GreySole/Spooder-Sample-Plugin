@@ -12,9 +12,9 @@ Utilities are web pages that communicate with your plugin, just like overlays. T
 
 # Settings
 On the plugin side, settings are loaded into the module itself, so it can be accessed with this.settings.
-On the overlay side, settings are loaded when onConnectSuccess is triggered. It can be accessed with window.pluginSettings
+On the overlay side, settings are loaded when onConnect is triggered. It can be accessed with window.pluginSettings
 
-Making settings forms are pretty easy. The sample html file contains every way to make inputs. Its essentially a form that matches each input's name to the resulting JSON file. If your settings are too complex for this, you can make a settings folder for your plugin in the web folder. Make your own settings web page and Spooder will render an iFrame instead of injecting HTML.
+Making settings forms are pretty easy. A lot easier with JSON based forms! The sample JSON shows every kind of input Spooder is capable of
 
 # Icons
 Icons are stored in the web folder along with overlays and utilities. Make a 120x120px png and name it the same as your plugin's directories to make it show in the Web UI.
@@ -24,27 +24,27 @@ Fill out your plugin's package.json file to give it a proper capitalized name, v
 
 # Global Functions
 Spooder comes with many global functions your plugins can use:
-OSC
--- sendToTCP(address:string, content:any): Use this to talk to your overlays. You can send numbers, bools, and strings (like stringified JSON objects)
--- sendToUDP(dest:string, address:string, content:any): Use this to talk to OSC software. Be sure to make a <select> field with the udpselect attribute in your settings form to let the user define which machine to send the messages to.
-Chat
--- chatisFirstMessage(message:obj): Returns true or false whether the message is the user’s first message to your channel
--- chatIsReturningChatter(message:obs): Returns true or false whether the message is from a returning chatter.
--- chatIsMod(message:obj): Returns true or false whether the user who sent this message is a moderator.
--- chatIsSubscriber(message:obj): Returns true or false whether the user who sent this message is a subscriber.
--- chatIsBroadcaster(message:obj): Returns true or false whether the user who sent this message is the broadcaster
--- getChatters(type:string): Returns an array of usernames for a specific type. Available types are: mod, vip, all
-Moderation
--- blacklistUser(viewername:string, duration:number (millis): Locks a user from using chat commands for the duration.
--- lockEvent(moduser:string, modCommand:string, target:string): Locks an event from use in chat. moduser is to tell which mod is calling, and modCommand is a boolean
--- lockPlugin(moduser:string, modCommand:string, target:string): Locks an plugin from use in chat. moduser is to tell which mod is calling, and modCommand is a boolean
--- setSpamguard(isOn:boolean): Turns on Spamguard which will lock out individual users for 60 seconds when spamming 6 commands each less than 2 seconds apart.
-OBS
--- callOBS(name:string, data:any): Make calls to the OBS websocket module to get data and send commands.
+## OSC
+### sendToTCP(address:string, content:any): Use this to talk to your overlays. You can send numbers, bools, and strings (like stringified JSON objects)
+### sendToUDP(dest:string, address:string, content:any): Use this to talk to OSC software. Be sure to make a <select> field with the udpselect attribute in your settings form to let the user define which machine to send the messages to.
+## Chat
+### chatisFirstMessage(message:obj): Returns true or false whether the message is the user’s first message to your channel
+### chatIsReturningChatter(message:obs): Returns true or false whether the message is from a returning chatter.
+### chatIsMod(message:obj): Returns true or false whether the user who sent this message is a moderator.
+### chatIsSubscriber(message:obj): Returns true or false whether the user who sent this message is a subscriber.
+### chatIsBroadcaster(message:obj): Returns true or false whether the user who sent this message is the broadcaster
+### getChatters(type:string): Returns an array of usernames for a specific type. Available types are: mod, vip, all
+## Moderation
+### blacklistUser(viewername:string, duration:number (millis): Locks a user from using chat commands for the duration.
+### lockEvent(moduser:string, modCommand:string, target:string): Locks an event from use in chat. moduser is to tell which mod is calling, and modCommand is a boolean
+### lockPlugin(moduser:string, modCommand:string, target:string): Locks an plugin from use in chat. moduser is to tell which mod is calling, and modCommand is a boolean
+### setSpamguard(isOn:boolean): Turns on Spamguard which will lock out individual users for 60 seconds when spamming 6 commands each less than 2 seconds apart.
+## OBS
+### callOBS(name:string, data:any): Make calls to the OBS websocket module to get data and send commands.
   
 # Overlay Pipeline Functions
--- getOSCMessage(message:obj): You'll need this for your overlay to talk to your plugin. Receives data from TCP OSC. Contains address, types, and args (data). So if you send a stringified JSON file, you can parse it on the overlay with JSON.parse(message.args[0]).
+## getOSCMessage(message:obj): You'll need this for your overlay to talk to your plugin. Receives data from TCP OSC. Contains address, types, and args (data). So if you send a stringified JSON file, you can parse it on the overlay with JSON.parse(message.args[0]).
   
 These functions aren't necessary, but could come in handy
--- onConnectSuccess(): Called when the overlay receives a connect success message from Spooder
--- onOSCOpen(): Called as soon as the OSC module is up and running.
+## onConnect(): Called when the overlay receives a connect success message from Spooder
+## onOSCOpen(): Called as soon as the OSC module is up and running.

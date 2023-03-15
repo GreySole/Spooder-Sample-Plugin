@@ -1,6 +1,7 @@
 {
   "name": "Sample Plugin",
   "version": "1.0.0",
+  "spooder-version":"0.4",
   "description": "Use this as a template for making plugins. When it's ready, you can export it in the web UI.",
   "main": "command.js",
   "scripts": {

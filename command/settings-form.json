@@ -1,0 +1,79 @@
+{
+    "form":{
+        "sample-input":{
+            "unused":"Any input type from HTML is supported here",
+            "label":"Sample Input",
+            "type":"text",
+            "options":{
+                "unused":"Put any props you would put in an HTML input here like min and max for ranges. For text, add json-friendly if you want to make sure the input text to be safe for json storage like key names"
+            }
+        },
+        "sample-multi-input":{
+            "unused":"Any input can have the multi-select flag. This turns the value into an array.",
+            "label":"Multi Input",
+            "type":"select",
+            "multi-select":true,
+            "options":{
+                "delete-me":"For select elements, add a 'selections' object to tell which options to use. Keys become the json value and values become the select option's label. There is a 'none' selection by default. Take that off with 'required:true'",
+                "selections":{
+                    "this":"This",
+                    "that":"That",
+                    "other":"The Other"
+                },
+                "required":true
+            }
+        },
+        "sample-udp":{
+            "unused":"Make a select input filled with the user's udp clients from config",
+            "label":"Sample UDP",
+            "type":"udp"
+        },
+        "sample-subform":{
+            "unused":"This is a form that can be cloned and stored as multiple objects.",
+            "label":"Subform Label",
+			"type":"subform",
+            "form":{
+                "keyname":{
+                    "unused":"This is the name of the object to be stored in the json file. You can use any input, but I recommend text or select. For text, use 'json-friendly' to make sure the input is safe for json keys.",
+                    "label":"JSON Key",
+                    "type":"text",
+                    "options":{
+                        "json-friendly":true
+                    }
+                },
+                "sample-asset":{
+                    "usused":"Assets are select objects that are filled with file names and paths of a specified folder. Set an asset type to filter files (image, sound, video, any ext)",
+                    "label":"Image Asset",
+					"type":"asset",
+                    "options":{
+                        "assetType":"image",
+                        "folder":"img"
+                    }
+                },
+                "showme":{
+                    "unused":"This will control whether you can see hideme or not",
+                    "label":"Show-If Example",
+                    "type":"checkbox"
+                },
+                "hideme":{
+                    "unused":"By default, the 'variable' searches through this subform for the variable you want before checking variables outside the subform. Conditions can work in english (equals, not equal, greater than, etc) or just the code itself '=='.",
+                    "label":"Hidden unless showme is checked",
+                    "type":"color",
+                    "showif":{
+                        "variable":"showme",
+                        "condition":"equals",
+                        "value":true
+                    }
+                }
+            }
+        }
+    },
+    "defaults":{
+        "sample-input":"Defaults are essential for filling in null values. Notice that subforms can't have a default key name or asset.",
+        "sample-multi-input":["this", "that"],
+        "sample-subform":{
+            "showme":false,
+            "hideme":"#00FF00"
+        }
+    }
+}
