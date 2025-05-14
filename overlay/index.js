@@ -17,7 +17,7 @@
     Errors on overlays are also emitted to Spooder. You can check for errors on the Web UI's OSC monitor and filter by plugin.
 */
 function getOSCMessage(message){
-    if(message.address == "/sampleplugin/anything"){
+    if(message.address == "/sampleplugin/connect"){
         console.log("I heard something", message.args);
     }
 }
