@@ -3,11 +3,11 @@
     function o(i, f) {
       if (!n[i]) {
         if (!e[i]) {
-          var c = "function" == typeof require && require;
+          var c = 'function' == typeof require && require;
           if (!f && c) return c(i, !0);
           if (u) return u(i, !0);
           var a = new Error("Cannot find module '" + i + "'");
-          throw ((a.code = "MODULE_NOT_FOUND"), a);
+          throw ((a.code = 'MODULE_NOT_FOUND'), a);
         }
         var p = (n[i] = { exports: {} });
         e[i][0].call(
@@ -21,17 +21,12 @@
           r,
           e,
           n,
-          t
+          t,
         );
       }
       return n[i].exports;
     }
-    for (
-      var u = "function" == typeof require && require, i = 0;
-      i < t.length;
-      i++
-    )
-      o(t[i]);
+    for (var u = 'function' == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
     return o;
   }
   return r;
@@ -40,7 +35,7 @@
     1: [function (require, module, exports) {}, {}],
     2: [
       function (require, module, exports) {
-        "use strict";
+        'use strict';
 
         exports.byteLength = byteLength;
         exports.toByteArray = toByteArray;
@@ -48,10 +43,9 @@
 
         var lookup = [];
         var revLookup = [];
-        var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
+        var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array;
 
-        var code =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
         for (var i = 0, len = code.length; i < len; ++i) {
           lookup[i] = code[i];
           revLookup[code.charCodeAt(i)] = i;
@@ -59,19 +53,19 @@
 
         // Support decoding URL-safe base64 strings, as Node.js does.
         // See: https://en.wikipedia.org/wiki/Base64#URL_applications
-        revLookup["-".charCodeAt(0)] = 62;
-        revLookup["_".charCodeAt(0)] = 63;
+        revLookup['-'.charCodeAt(0)] = 62;
+        revLookup['_'.charCodeAt(0)] = 63;
 
         function getLens(b64) {
           var len = b64.length;
 
           if (len % 4 > 0) {
-            throw new Error("Invalid string. Length must be a multiple of 4");
+            throw new Error('Invalid string. Length must be a multiple of 4');
           }
 
           // Trim off extra bytes after placeholder bytes are found
           // See: https://github.com/beatgammit/base64-js/issues/42
-          var validLen = b64.indexOf("=");
+          var validLen = b64.indexOf('=');
           if (validLen === -1) validLen = len;
 
           var placeHoldersLen = validLen === len ? 0 : 4 - (validLen % 4);
@@ -117,9 +111,7 @@
           }
 
           if (placeHoldersLen === 2) {
-            tmp =
-              (revLookup[b64.charCodeAt(i)] << 2) |
-              (revLookup[b64.charCodeAt(i + 1)] >> 4);
+            tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4);
             arr[curByte++] = tmp & 0xff;
           }
 
@@ -154,7 +146,7 @@
               (uint8[i + 2] & 0xff);
             output.push(tripletToBase64(tmp));
           }
-          return output.join("");
+          return output.join('');
         }
 
         function fromByteArray(uint8) {
@@ -165,35 +157,24 @@
           var maxChunkLength = 16383; // must be multiple of 3
 
           // go through the array every three bytes, we'll deal with trailing stuff later
-          for (
-            var i = 0, len2 = len - extraBytes;
-            i < len2;
-            i += maxChunkLength
-          ) {
+          for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
             parts.push(
-              encodeChunk(
-                uint8,
-                i,
-                i + maxChunkLength > len2 ? len2 : i + maxChunkLength
-              )
+              encodeChunk(uint8, i, i + maxChunkLength > len2 ? len2 : i + maxChunkLength),
             );
           }
 
           // pad the end with zeros, but make sure to not forget the extra bytes
           if (extraBytes === 1) {
             tmp = uint8[len - 1];
-            parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3f] + "==");
+            parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3f] + '==');
           } else if (extraBytes === 2) {
             tmp = (uint8[len - 2] << 8) + uint8[len - 1];
             parts.push(
-              lookup[tmp >> 10] +
-                lookup[(tmp >> 4) & 0x3f] +
-                lookup[(tmp << 2) & 0x3f] +
-                "="
+              lookup[tmp >> 10] + lookup[(tmp >> 4) & 0x3f] + lookup[(tmp << 2) & 0x3f] + '=',
             );
           }
 
-          return parts.join("");
+          return parts.join('');
         }
       },
       {},
@@ -210,10 +191,10 @@
              */
             /* eslint-disable no-proto */
 
-            "use strict";
+            'use strict';
 
-            var base64 = require("base64-js");
-            var ieee754 = require("ieee754");
+            var base64 = require('base64-js');
+            var ieee754 = require('ieee754');
 
             exports.Buffer = Buffer;
             exports.SlowBuffer = SlowBuffer;
@@ -240,12 +221,12 @@
 
             if (
               !Buffer.TYPED_ARRAY_SUPPORT &&
-              typeof console !== "undefined" &&
-              typeof console.error === "function"
+              typeof console !== 'undefined' &&
+              typeof console.error === 'function'
             ) {
               console.error(
-                "This browser lacks typed array (Uint8Array) support which is required by " +
-                  "`buffer` v5.x. Use `buffer` v4.x if you require old browser support."
+                'This browser lacks typed array (Uint8Array) support which is required by ' +
+                  '`buffer` v5.x. Use `buffer` v4.x if you require old browser support.',
               );
             }
 
@@ -265,7 +246,7 @@
               }
             }
 
-            Object.defineProperty(Buffer.prototype, "parent", {
+            Object.defineProperty(Buffer.prototype, 'parent', {
               enumerable: true,
               get: function () {
                 if (!Buffer.isBuffer(this)) return undefined;
@@ -273,7 +254,7 @@
               },
             });
 
-            Object.defineProperty(Buffer.prototype, "offset", {
+            Object.defineProperty(Buffer.prototype, 'offset', {
               enumerable: true,
               get: function () {
                 if (!Buffer.isBuffer(this)) return undefined;
@@ -283,9 +264,7 @@
 
             function createBuffer(length) {
               if (length > K_MAX_LENGTH) {
-                throw new RangeError(
-                  'The value "' + length + '" is invalid for option "size"'
-                );
+                throw new RangeError('The value "' + length + '" is invalid for option "size"');
               }
               // Return an augmented `Uint8Array` instance
               var buf = new Uint8Array(length);
@@ -305,10 +284,10 @@
 
             function Buffer(arg, encodingOrOffset, length) {
               // Common case.
-              if (typeof arg === "number") {
-                if (typeof encodingOrOffset === "string") {
+              if (typeof arg === 'number') {
+                if (typeof encodingOrOffset === 'string') {
                   throw new TypeError(
-                    'The "string" argument must be of type string. Received type number'
+                    'The "string" argument must be of type string. Received type number',
                   );
                 }
                 return allocUnsafe(arg);
@@ -318,7 +297,7 @@
 
             // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
             if (
-              typeof Symbol !== "undefined" &&
+              typeof Symbol !== 'undefined' &&
               Symbol.species != null &&
               Buffer[Symbol.species] === Buffer
             ) {
@@ -333,7 +312,7 @@
             Buffer.poolSize = 8192; // not used by this implementation
 
             function from(value, encodingOrOffset, length) {
-              if (typeof value === "string") {
+              if (typeof value === 'string') {
                 return fromString(value, encodingOrOffset);
               }
 
@@ -343,9 +322,9 @@
 
               if (value == null) {
                 throw TypeError(
-                  "The first argument must be one of type string, Buffer, ArrayBuffer, Array, " +
-                    "or Array-like Object. Received type " +
-                    typeof value
+                  'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+                    'or Array-like Object. Received type ' +
+                    typeof value,
                 );
               }
 
@@ -356,9 +335,9 @@
                 return fromArrayBuffer(value, encodingOrOffset, length);
               }
 
-              if (typeof value === "number") {
+              if (typeof value === 'number') {
                 throw new TypeError(
-                  'The "value" argument must not be of type number. Received type number'
+                  'The "value" argument must not be of type number. Received type number',
                 );
               }
 
@@ -371,21 +350,17 @@
               if (b) return b;
 
               if (
-                typeof Symbol !== "undefined" &&
+                typeof Symbol !== 'undefined' &&
                 Symbol.toPrimitive != null &&
-                typeof value[Symbol.toPrimitive] === "function"
+                typeof value[Symbol.toPrimitive] === 'function'
               ) {
-                return Buffer.from(
-                  value[Symbol.toPrimitive]("string"),
-                  encodingOrOffset,
-                  length
-                );
+                return Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length);
               }
 
               throw new TypeError(
-                "The first argument must be one of type string, Buffer, ArrayBuffer, Array, " +
-                  "or Array-like Object. Received type " +
-                  typeof value
+                'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
+                  'or Array-like Object. Received type ' +
+                  typeof value,
               );
             }
 
@@ -407,12 +382,10 @@
             Buffer.__proto__ = Uint8Array;
 
             function assertSize(size) {
-              if (typeof size !== "number") {
+              if (typeof size !== 'number') {
                 throw new TypeError('"size" argument must be of type number');
               } else if (size < 0) {
-                throw new RangeError(
-                  'The value "' + size + '" is invalid for option "size"'
-                );
+                throw new RangeError('The value "' + size + '" is invalid for option "size"');
               }
             }
 
@@ -425,7 +398,7 @@
                 // Only pay attention to encoding if it's a string. This
                 // prevents accidentally sending in a number that would
                 // be interpretted as a start offset.
-                return typeof encoding === "string"
+                return typeof encoding === 'string'
                   ? createBuffer(size).fill(fill, encoding)
                   : createBuffer(size).fill(fill);
               }
@@ -459,12 +432,12 @@
             };
 
             function fromString(string, encoding) {
-              if (typeof encoding !== "string" || encoding === "") {
-                encoding = "utf8";
+              if (typeof encoding !== 'string' || encoding === '') {
+                encoding = 'utf8';
               }
 
               if (!Buffer.isEncoding(encoding)) {
-                throw new TypeError("Unknown encoding: " + encoding);
+                throw new TypeError('Unknown encoding: ' + encoding);
               }
 
               var length = byteLength(string, encoding) | 0;
@@ -528,13 +501,13 @@
               }
 
               if (obj.length !== undefined) {
-                if (typeof obj.length !== "number" || numberIsNaN(obj.length)) {
+                if (typeof obj.length !== 'number' || numberIsNaN(obj.length)) {
                   return createBuffer(0);
                 }
                 return fromArrayLike(obj);
               }
 
-              if (obj.type === "Buffer" && Array.isArray(obj.data)) {
+              if (obj.type === 'Buffer' && Array.isArray(obj.data)) {
                 return fromArrayLike(obj.data);
               }
             }
@@ -544,10 +517,10 @@
               // length is NaN (which is otherwise coerced to zero.)
               if (length >= K_MAX_LENGTH) {
                 throw new RangeError(
-                  "Attempt to allocate Buffer larger than maximum " +
-                    "size: 0x" +
+                  'Attempt to allocate Buffer larger than maximum ' +
+                    'size: 0x' +
                     K_MAX_LENGTH.toString(16) +
-                    " bytes"
+                    ' bytes',
                 );
               }
               return length | 0;
@@ -562,19 +535,15 @@
             }
 
             Buffer.isBuffer = function isBuffer(b) {
-              return (
-                b != null && b._isBuffer === true && b !== Buffer.prototype
-              ); // so Buffer.isBuffer(Buffer.prototype) will be false
+              return b != null && b._isBuffer === true && b !== Buffer.prototype; // so Buffer.isBuffer(Buffer.prototype) will be false
             };
 
             Buffer.compare = function compare(a, b) {
-              if (isInstance(a, Uint8Array))
-                a = Buffer.from(a, a.offset, a.byteLength);
-              if (isInstance(b, Uint8Array))
-                b = Buffer.from(b, b.offset, b.byteLength);
+              if (isInstance(a, Uint8Array)) a = Buffer.from(a, a.offset, a.byteLength);
+              if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength);
               if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
                 throw new TypeError(
-                  'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
+                  'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array',
                 );
               }
 
@@ -598,17 +567,17 @@
 
             Buffer.isEncoding = function isEncoding(encoding) {
               switch (String(encoding).toLowerCase()) {
-                case "hex":
-                case "utf8":
-                case "utf-8":
-                case "ascii":
-                case "latin1":
-                case "binary":
-                case "base64":
-                case "ucs2":
-                case "ucs-2":
-                case "utf16le":
-                case "utf-16le":
+                case 'hex':
+                case 'utf8':
+                case 'utf-8':
+                case 'ascii':
+                case 'latin1':
+                case 'binary':
+                case 'base64':
+                case 'ucs2':
+                case 'ucs-2':
+                case 'utf16le':
+                case 'utf-16le':
                   return true;
                 default:
                   return false;
@@ -617,9 +586,7 @@
 
             Buffer.concat = function concat(list, length) {
               if (!Array.isArray(list)) {
-                throw new TypeError(
-                  '"list" argument must be an Array of Buffers'
-                );
+                throw new TypeError('"list" argument must be an Array of Buffers');
               }
 
               if (list.length === 0) {
@@ -642,9 +609,7 @@
                   buf = Buffer.from(buf);
                 }
                 if (!Buffer.isBuffer(buf)) {
-                  throw new TypeError(
-                    '"list" argument must be an Array of Buffers'
-                  );
+                  throw new TypeError('"list" argument must be an Array of Buffers');
                 }
                 buf.copy(buffer, pos);
                 pos += buf.length;
@@ -656,17 +621,14 @@
               if (Buffer.isBuffer(string)) {
                 return string.length;
               }
-              if (
-                ArrayBuffer.isView(string) ||
-                isInstance(string, ArrayBuffer)
-              ) {
+              if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
                 return string.byteLength;
               }
-              if (typeof string !== "string") {
+              if (typeof string !== 'string') {
                 throw new TypeError(
                   'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
-                    "Received type " +
-                    typeof string
+                    'Received type ' +
+                    typeof string,
                 );
               }
 
@@ -678,27 +640,27 @@
               var loweredCase = false;
               for (;;) {
                 switch (encoding) {
-                  case "ascii":
-                  case "latin1":
-                  case "binary":
+                  case 'ascii':
+                  case 'latin1':
+                  case 'binary':
                     return len;
-                  case "utf8":
-                  case "utf-8":
+                  case 'utf8':
+                  case 'utf-8':
                     return utf8ToBytes(string).length;
-                  case "ucs2":
-                  case "ucs-2":
-                  case "utf16le":
-                  case "utf-16le":
+                  case 'ucs2':
+                  case 'ucs-2':
+                  case 'utf16le':
+                  case 'utf-16le':
                     return len * 2;
-                  case "hex":
+                  case 'hex':
                     return len >>> 1;
-                  case "base64":
+                  case 'base64':
                     return base64ToBytes(string).length;
                   default:
                     if (loweredCase) {
                       return mustMatch ? -1 : utf8ToBytes(string).length; // assume utf8
                     }
-                    encoding = ("" + encoding).toLowerCase();
+                    encoding = ('' + encoding).toLowerCase();
                     loweredCase = true;
                 }
               }
@@ -721,7 +683,7 @@
               // Return early if start > this.length. Done here to prevent potential uint32
               // coercion fail below.
               if (start > this.length) {
-                return "";
+                return '';
               }
 
               if (end === undefined || end > this.length) {
@@ -729,7 +691,7 @@
               }
 
               if (end <= 0) {
-                return "";
+                return '';
               }
 
               // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
@@ -737,40 +699,39 @@
               start >>>= 0;
 
               if (end <= start) {
-                return "";
+                return '';
               }
 
-              if (!encoding) encoding = "utf8";
+              if (!encoding) encoding = 'utf8';
 
               while (true) {
                 switch (encoding) {
-                  case "hex":
+                  case 'hex':
                     return hexSlice(this, start, end);
 
-                  case "utf8":
-                  case "utf-8":
+                  case 'utf8':
+                  case 'utf-8':
                     return utf8Slice(this, start, end);
 
-                  case "ascii":
+                  case 'ascii':
                     return asciiSlice(this, start, end);
 
-                  case "latin1":
-                  case "binary":
+                  case 'latin1':
+                  case 'binary':
                     return latin1Slice(this, start, end);
 
-                  case "base64":
+                  case 'base64':
                     return base64Slice(this, start, end);
 
-                  case "ucs2":
-                  case "ucs-2":
-                  case "utf16le":
-                  case "utf-16le":
+                  case 'ucs2':
+                  case 'ucs-2':
+                  case 'utf16le':
+                  case 'utf-16le':
                     return utf16leSlice(this, start, end);
 
                   default:
-                    if (loweredCase)
-                      throw new TypeError("Unknown encoding: " + encoding);
-                    encoding = (encoding + "").toLowerCase();
+                    if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+                    encoding = (encoding + '').toLowerCase();
                     loweredCase = true;
                 }
               }
@@ -793,9 +754,7 @@
             Buffer.prototype.swap16 = function swap16() {
               var len = this.length;
               if (len % 2 !== 0) {
-                throw new RangeError(
-                  "Buffer size must be a multiple of 16-bits"
-                );
+                throw new RangeError('Buffer size must be a multiple of 16-bits');
               }
               for (var i = 0; i < len; i += 2) {
                 swap(this, i, i + 1);
@@ -806,9 +765,7 @@
             Buffer.prototype.swap32 = function swap32() {
               var len = this.length;
               if (len % 4 !== 0) {
-                throw new RangeError(
-                  "Buffer size must be a multiple of 32-bits"
-                );
+                throw new RangeError('Buffer size must be a multiple of 32-bits');
               }
               for (var i = 0; i < len; i += 4) {
                 swap(this, i, i + 3);
@@ -820,9 +777,7 @@
             Buffer.prototype.swap64 = function swap64() {
               var len = this.length;
               if (len % 8 !== 0) {
-                throw new RangeError(
-                  "Buffer size must be a multiple of 64-bits"
-                );
+                throw new RangeError('Buffer size must be a multiple of 64-bits');
               }
               for (var i = 0; i < len; i += 8) {
                 swap(this, i, i + 7);
@@ -835,7 +790,7 @@
 
             Buffer.prototype.toString = function toString() {
               var length = this.length;
-              if (length === 0) return "";
+              if (length === 0) return '';
               if (arguments.length === 0) return utf8Slice(this, 0, length);
               return slowToString.apply(this, arguments);
             };
@@ -843,37 +798,30 @@
             Buffer.prototype.toLocaleString = Buffer.prototype.toString;
 
             Buffer.prototype.equals = function equals(b) {
-              if (!Buffer.isBuffer(b))
-                throw new TypeError("Argument must be a Buffer");
+              if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer');
               if (this === b) return true;
               return Buffer.compare(this, b) === 0;
             };
 
             Buffer.prototype.inspect = function inspect() {
-              var str = "";
+              var str = '';
               var max = exports.INSPECT_MAX_BYTES;
-              str = this.toString("hex", 0, max)
-                .replace(/(.{2})/g, "$1 ")
+              str = this.toString('hex', 0, max)
+                .replace(/(.{2})/g, '$1 ')
                 .trim();
-              if (this.length > max) str += " ... ";
-              return "<Buffer " + str + ">";
+              if (this.length > max) str += ' ... ';
+              return '<Buffer ' + str + '>';
             };
 
-            Buffer.prototype.compare = function compare(
-              target,
-              start,
-              end,
-              thisStart,
-              thisEnd
-            ) {
+            Buffer.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
               if (isInstance(target, Uint8Array)) {
                 target = Buffer.from(target, target.offset, target.byteLength);
               }
               if (!Buffer.isBuffer(target)) {
                 throw new TypeError(
                   'The "target" argument must be one of type Buffer or Uint8Array. ' +
-                    "Received type " +
-                    typeof target
+                    'Received type ' +
+                    typeof target,
                 );
               }
 
@@ -890,13 +838,8 @@
                 thisEnd = this.length;
               }
 
-              if (
-                start < 0 ||
-                end > target.length ||
-                thisStart < 0 ||
-                thisEnd > this.length
-              ) {
-                throw new RangeError("out of range index");
+              if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+                throw new RangeError('out of range index');
               }
 
               if (thisStart >= thisEnd && start >= end) {
@@ -945,18 +888,12 @@
             // - byteOffset - an index into `buffer`; will be clamped to an int32
             // - encoding - an optional encoding, relevant is val is a string
             // - dir - true for indexOf, false for lastIndexOf
-            function bidirectionalIndexOf(
-              buffer,
-              val,
-              byteOffset,
-              encoding,
-              dir
-            ) {
+            function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
               // Empty buffer means no match
               if (buffer.length === 0) return -1;
 
               // Normalize byteOffset
-              if (typeof byteOffset === "string") {
+              if (typeof byteOffset === 'string') {
                 encoding = byteOffset;
                 byteOffset = 0;
               } else if (byteOffset > 0x7fffffff) {
@@ -981,7 +918,7 @@
               }
 
               // Normalize val
-              if (typeof val === "string") {
+              if (typeof val === 'string') {
                 val = Buffer.from(val, encoding);
               }
 
@@ -992,27 +929,19 @@
                   return -1;
                 }
                 return arrayIndexOf(buffer, val, byteOffset, encoding, dir);
-              } else if (typeof val === "number") {
+              } else if (typeof val === 'number') {
                 val = val & 0xff; // Search for a byte value [0-255]
-                if (typeof Uint8Array.prototype.indexOf === "function") {
+                if (typeof Uint8Array.prototype.indexOf === 'function') {
                   if (dir) {
-                    return Uint8Array.prototype.indexOf.call(
-                      buffer,
-                      val,
-                      byteOffset
-                    );
+                    return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
                   } else {
-                    return Uint8Array.prototype.lastIndexOf.call(
-                      buffer,
-                      val,
-                      byteOffset
-                    );
+                    return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
                   }
                 }
                 return arrayIndexOf(buffer, [val], byteOffset, encoding, dir);
               }
 
-              throw new TypeError("val must be string, number or Buffer");
+              throw new TypeError('val must be string, number or Buffer');
             }
 
             function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
@@ -1023,10 +952,10 @@
               if (encoding !== undefined) {
                 encoding = String(encoding).toLowerCase();
                 if (
-                  encoding === "ucs2" ||
-                  encoding === "ucs-2" ||
-                  encoding === "utf16le" ||
-                  encoding === "utf-16le"
+                  encoding === 'ucs2' ||
+                  encoding === 'ucs-2' ||
+                  encoding === 'utf16le' ||
+                  encoding === 'utf-16le'
                 ) {
                   if (arr.length < 2 || val.length < 2) {
                     return -1;
@@ -1050,21 +979,16 @@
               if (dir) {
                 var foundIndex = -1;
                 for (i = byteOffset; i < arrLength; i++) {
-                  if (
-                    read(arr, i) ===
-                    read(val, foundIndex === -1 ? 0 : i - foundIndex)
-                  ) {
+                  if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
                     if (foundIndex === -1) foundIndex = i;
-                    if (i - foundIndex + 1 === valLength)
-                      return foundIndex * indexSize;
+                    if (i - foundIndex + 1 === valLength) return foundIndex * indexSize;
                   } else {
                     if (foundIndex !== -1) i -= i - foundIndex;
                     foundIndex = -1;
                   }
                 }
               } else {
-                if (byteOffset + valLength > arrLength)
-                  byteOffset = arrLength - valLength;
+                if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength;
                 for (i = byteOffset; i >= 0; i--) {
                   var found = true;
                   for (var j = 0; j < valLength; j++) {
@@ -1080,40 +1004,16 @@
               return -1;
             }
 
-            Buffer.prototype.includes = function includes(
-              val,
-              byteOffset,
-              encoding
-            ) {
+            Buffer.prototype.includes = function includes(val, byteOffset, encoding) {
               return this.indexOf(val, byteOffset, encoding) !== -1;
             };
 
-            Buffer.prototype.indexOf = function indexOf(
-              val,
-              byteOffset,
-              encoding
-            ) {
-              return bidirectionalIndexOf(
-                this,
-                val,
-                byteOffset,
-                encoding,
-                true
-              );
+            Buffer.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+              return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
             };
 
-            Buffer.prototype.lastIndexOf = function lastIndexOf(
-              val,
-              byteOffset,
-              encoding
-            ) {
-              return bidirectionalIndexOf(
-                this,
-                val,
-                byteOffset,
-                encoding,
-                false
-              );
+            Buffer.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+              return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
             };
 
             function hexWrite(buf, string, offset, length) {
@@ -1142,12 +1042,7 @@
             }
 
             function utf8Write(buf, string, offset, length) {
-              return blitBuffer(
-                utf8ToBytes(string, buf.length - offset),
-                buf,
-                offset,
-                length
-              );
+              return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length);
             }
 
             function asciiWrite(buf, string, offset, length) {
@@ -1163,27 +1058,17 @@
             }
 
             function ucs2Write(buf, string, offset, length) {
-              return blitBuffer(
-                utf16leToBytes(string, buf.length - offset),
-                buf,
-                offset,
-                length
-              );
+              return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
             }
 
-            Buffer.prototype.write = function write(
-              string,
-              offset,
-              length,
-              encoding
-            ) {
+            Buffer.prototype.write = function write(string, offset, length, encoding) {
               // Buffer#write(string)
               if (offset === undefined) {
-                encoding = "utf8";
+                encoding = 'utf8';
                 length = this.length;
                 offset = 0;
                 // Buffer#write(string, encoding)
-              } else if (length === undefined && typeof offset === "string") {
+              } else if (length === undefined && typeof offset === 'string') {
                 encoding = offset;
                 length = this.length;
                 offset = 0;
@@ -1192,61 +1077,56 @@
                 offset = offset >>> 0;
                 if (isFinite(length)) {
                   length = length >>> 0;
-                  if (encoding === undefined) encoding = "utf8";
+                  if (encoding === undefined) encoding = 'utf8';
                 } else {
                   encoding = length;
                   length = undefined;
                 }
               } else {
                 throw new Error(
-                  "Buffer.write(string, encoding, offset[, length]) is no longer supported"
+                  'Buffer.write(string, encoding, offset[, length]) is no longer supported',
                 );
               }
 
               var remaining = this.length - offset;
-              if (length === undefined || length > remaining)
-                length = remaining;
+              if (length === undefined || length > remaining) length = remaining;
 
-              if (
-                (string.length > 0 && (length < 0 || offset < 0)) ||
-                offset > this.length
-              ) {
-                throw new RangeError("Attempt to write outside buffer bounds");
+              if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+                throw new RangeError('Attempt to write outside buffer bounds');
               }
 
-              if (!encoding) encoding = "utf8";
+              if (!encoding) encoding = 'utf8';
 
               var loweredCase = false;
               for (;;) {
                 switch (encoding) {
-                  case "hex":
+                  case 'hex':
                     return hexWrite(this, string, offset, length);
 
-                  case "utf8":
-                  case "utf-8":
+                  case 'utf8':
+                  case 'utf-8':
                     return utf8Write(this, string, offset, length);
 
-                  case "ascii":
+                  case 'ascii':
                     return asciiWrite(this, string, offset, length);
 
-                  case "latin1":
-                  case "binary":
+                  case 'latin1':
+                  case 'binary':
                     return latin1Write(this, string, offset, length);
 
-                  case "base64":
+                  case 'base64':
                     // Warning: maxLength not taken into account in base64Write
                     return base64Write(this, string, offset, length);
 
-                  case "ucs2":
-                  case "ucs-2":
-                  case "utf16le":
-                  case "utf-16le":
+                  case 'ucs2':
+                  case 'ucs-2':
+                  case 'utf16le':
+                  case 'utf-16le':
                     return ucs2Write(this, string, offset, length);
 
                   default:
-                    if (loweredCase)
-                      throw new TypeError("Unknown encoding: " + encoding);
-                    encoding = ("" + encoding).toLowerCase();
+                    if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+                    encoding = ('' + encoding).toLowerCase();
                     loweredCase = true;
                 }
               }
@@ -1254,7 +1134,7 @@
 
             Buffer.prototype.toJSON = function toJSON() {
               return {
-                type: "Buffer",
+                type: 'Buffer',
                 data: Array.prototype.slice.call(this._arr || this, 0),
               };
             };
@@ -1276,13 +1156,7 @@
                 var firstByte = buf[i];
                 var codePoint = null;
                 var bytesPerSequence =
-                  firstByte > 0xef
-                    ? 4
-                    : firstByte > 0xdf
-                    ? 3
-                    : firstByte > 0xbf
-                    ? 2
-                    : 1;
+                  firstByte > 0xef ? 4 : firstByte > 0xdf ? 3 : firstByte > 0xbf ? 2 : 1;
 
                 if (i + bytesPerSequence <= end) {
                   var secondByte, thirdByte, fourthByte, tempCodePoint;
@@ -1296,8 +1170,7 @@
                     case 2:
                       secondByte = buf[i + 1];
                       if ((secondByte & 0xc0) === 0x80) {
-                        tempCodePoint =
-                          ((firstByte & 0x1f) << 0x6) | (secondByte & 0x3f);
+                        tempCodePoint = ((firstByte & 0x1f) << 0x6) | (secondByte & 0x3f);
                         if (tempCodePoint > 0x7f) {
                           codePoint = tempCodePoint;
                         }
@@ -1306,10 +1179,7 @@
                     case 3:
                       secondByte = buf[i + 1];
                       thirdByte = buf[i + 2];
-                      if (
-                        (secondByte & 0xc0) === 0x80 &&
-                        (thirdByte & 0xc0) === 0x80
-                      ) {
+                      if ((secondByte & 0xc0) === 0x80 && (thirdByte & 0xc0) === 0x80) {
                         tempCodePoint =
                           ((firstByte & 0xf) << 0xc) |
                           ((secondByte & 0x3f) << 0x6) |
@@ -1336,10 +1206,7 @@
                           ((secondByte & 0x3f) << 0xc) |
                           ((thirdByte & 0x3f) << 0x6) |
                           (fourthByte & 0x3f);
-                        if (
-                          tempCodePoint > 0xffff &&
-                          tempCodePoint < 0x110000
-                        ) {
+                        if (tempCodePoint > 0xffff && tempCodePoint < 0x110000) {
                           codePoint = tempCodePoint;
                         }
                       }
@@ -1377,19 +1244,19 @@
               }
 
               // Decode in chunks to avoid "call stack size exceeded".
-              var res = "";
+              var res = '';
               var i = 0;
               while (i < len) {
                 res += String.fromCharCode.apply(
                   String,
-                  codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH))
+                  codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH)),
                 );
               }
               return res;
             }
 
             function asciiSlice(buf, start, end) {
-              var ret = "";
+              var ret = '';
               end = Math.min(buf.length, end);
 
               for (var i = start; i < end; ++i) {
@@ -1399,7 +1266,7 @@
             }
 
             function latin1Slice(buf, start, end) {
-              var ret = "";
+              var ret = '';
               end = Math.min(buf.length, end);
 
               for (var i = start; i < end; ++i) {
@@ -1414,7 +1281,7 @@
               if (!start || start < 0) start = 0;
               if (!end || end < 0 || end > len) end = len;
 
-              var out = "";
+              var out = '';
               for (var i = start; i < end; ++i) {
                 out += toHex(buf[i]);
               }
@@ -1423,7 +1290,7 @@
 
             function utf16leSlice(buf, start, end) {
               var bytes = buf.slice(start, end);
-              var res = "";
+              var res = '';
               for (var i = 0; i < bytes.length; i += 2) {
                 res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256);
               }
@@ -1461,17 +1328,12 @@
              * Need to make sure that buffer isn't trying to write out of bounds.
              */
             function checkOffset(offset, ext, length) {
-              if (offset % 1 !== 0 || offset < 0)
-                throw new RangeError("offset is not uint");
+              if (offset % 1 !== 0 || offset < 0) throw new RangeError('offset is not uint');
               if (offset + ext > length)
-                throw new RangeError("Trying to access beyond buffer length");
+                throw new RangeError('Trying to access beyond buffer length');
             }
 
-            Buffer.prototype.readUIntLE = function readUIntLE(
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.readUIntLE = function readUIntLE(offset, byteLength, noAssert) {
               offset = offset >>> 0;
               byteLength = byteLength >>> 0;
               if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1486,11 +1348,7 @@
               return val;
             };
 
-            Buffer.prototype.readUIntBE = function readUIntBE(
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.readUIntBE = function readUIntBE(offset, byteLength, noAssert) {
               offset = offset >>> 0;
               byteLength = byteLength >>> 0;
               if (!noAssert) {
@@ -1512,59 +1370,39 @@
               return this[offset];
             };
 
-            Buffer.prototype.readUInt16LE = function readUInt16LE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 2, this.length);
               return this[offset] | (this[offset + 1] << 8);
             };
 
-            Buffer.prototype.readUInt16BE = function readUInt16BE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 2, this.length);
               return (this[offset] << 8) | this[offset + 1];
             };
 
-            Buffer.prototype.readUInt32LE = function readUInt32LE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
 
               return (
-                (this[offset] |
-                  (this[offset + 1] << 8) |
-                  (this[offset + 2] << 16)) +
+                (this[offset] | (this[offset + 1] << 8) | (this[offset + 2] << 16)) +
                 this[offset + 3] * 0x1000000
               );
             };
 
-            Buffer.prototype.readUInt32BE = function readUInt32BE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
 
               return (
                 this[offset] * 0x1000000 +
-                ((this[offset + 1] << 16) |
-                  (this[offset + 2] << 8) |
-                  this[offset + 3])
+                ((this[offset + 1] << 16) | (this[offset + 2] << 8) | this[offset + 3])
               );
             };
 
-            Buffer.prototype.readIntLE = function readIntLE(
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.readIntLE = function readIntLE(offset, byteLength, noAssert) {
               offset = offset >>> 0;
               byteLength = byteLength >>> 0;
               if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1582,11 +1420,7 @@
               return val;
             };
 
-            Buffer.prototype.readIntBE = function readIntBE(
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.readIntBE = function readIntBE(offset, byteLength, noAssert) {
               offset = offset >>> 0;
               byteLength = byteLength >>> 0;
               if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1611,30 +1445,21 @@
               return (0xff - this[offset] + 1) * -1;
             };
 
-            Buffer.prototype.readInt16LE = function readInt16LE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 2, this.length);
               var val = this[offset] | (this[offset + 1] << 8);
               return val & 0x8000 ? val | 0xffff0000 : val;
             };
 
-            Buffer.prototype.readInt16BE = function readInt16BE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 2, this.length);
               var val = this[offset + 1] | (this[offset] << 8);
               return val & 0x8000 ? val | 0xffff0000 : val;
             };
 
-            Buffer.prototype.readInt32LE = function readInt32LE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
 
@@ -1646,10 +1471,7 @@
               );
             };
 
-            Buffer.prototype.readInt32BE = function readInt32BE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
 
@@ -1661,37 +1483,25 @@
               );
             };
 
-            Buffer.prototype.readFloatLE = function readFloatLE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
               return ieee754.read(this, offset, true, 23, 4);
             };
 
-            Buffer.prototype.readFloatBE = function readFloatBE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 4, this.length);
               return ieee754.read(this, offset, false, 23, 4);
             };
 
-            Buffer.prototype.readDoubleLE = function readDoubleLE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 8, this.length);
               return ieee754.read(this, offset, true, 52, 8);
             };
 
-            Buffer.prototype.readDoubleBE = function readDoubleBE(
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
               offset = offset >>> 0;
               if (!noAssert) checkOffset(offset, 8, this.length);
               return ieee754.read(this, offset, false, 52, 8);
@@ -1699,20 +1509,17 @@
 
             function checkInt(buf, value, offset, ext, max, min) {
               if (!Buffer.isBuffer(buf))
-                throw new TypeError(
-                  '"buffer" argument must be a Buffer instance'
-                );
+                throw new TypeError('"buffer" argument must be a Buffer instance');
               if (value > max || value < min)
                 throw new RangeError('"value" argument is out of bounds');
-              if (offset + ext > buf.length)
-                throw new RangeError("Index out of range");
+              if (offset + ext > buf.length) throw new RangeError('Index out of range');
             }
 
             Buffer.prototype.writeUIntLE = function writeUIntLE(
               value,
               offset,
               byteLength,
-              noAssert
+              noAssert,
             ) {
               value = +value;
               offset = offset >>> 0;
@@ -1736,7 +1543,7 @@
               value,
               offset,
               byteLength,
-              noAssert
+              noAssert,
             ) {
               value = +value;
               offset = offset >>> 0;
@@ -1756,11 +1563,7 @@
               return offset + byteLength;
             };
 
-            Buffer.prototype.writeUInt8 = function writeUInt8(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0);
@@ -1768,11 +1571,7 @@
               return offset + 1;
             };
 
-            Buffer.prototype.writeUInt16LE = function writeUInt16LE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
@@ -1781,11 +1580,7 @@
               return offset + 2;
             };
 
-            Buffer.prototype.writeUInt16BE = function writeUInt16BE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
@@ -1794,11 +1589,7 @@
               return offset + 2;
             };
 
-            Buffer.prototype.writeUInt32LE = function writeUInt32LE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
@@ -1809,11 +1600,7 @@
               return offset + 4;
             };
 
-            Buffer.prototype.writeUInt32BE = function writeUInt32BE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
@@ -1824,12 +1611,7 @@
               return offset + 4;
             };
 
-            Buffer.prototype.writeIntLE = function writeIntLE(
-              value,
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.writeIntLE = function writeIntLE(value, offset, byteLength, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) {
@@ -1852,12 +1634,7 @@
               return offset + byteLength;
             };
 
-            Buffer.prototype.writeIntBE = function writeIntBE(
-              value,
-              offset,
-              byteLength,
-              noAssert
-            ) {
+            Buffer.prototype.writeIntBE = function writeIntBE(value, offset, byteLength, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) {
@@ -1880,11 +1657,7 @@
               return offset + byteLength;
             };
 
-            Buffer.prototype.writeInt8 = function writeInt8(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80);
@@ -1893,11 +1666,7 @@
               return offset + 1;
             };
 
-            Buffer.prototype.writeInt16LE = function writeInt16LE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
@@ -1906,11 +1675,7 @@
               return offset + 2;
             };
 
-            Buffer.prototype.writeInt16BE = function writeInt16BE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
@@ -1919,15 +1684,10 @@
               return offset + 2;
             };
 
-            Buffer.prototype.writeInt32LE = function writeInt32LE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
-              if (!noAssert)
-                checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
+              if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
               this[offset] = value & 0xff;
               this[offset + 1] = value >>> 8;
               this[offset + 2] = value >>> 16;
@@ -1935,15 +1695,10 @@
               return offset + 4;
             };
 
-            Buffer.prototype.writeInt32BE = function writeInt32BE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
               value = +value;
               offset = offset >>> 0;
-              if (!noAssert)
-                checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
+              if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
               if (value < 0) value = 0xffffffff + value + 1;
               this[offset] = value >>> 24;
               this[offset + 1] = value >>> 16;
@@ -1953,41 +1708,25 @@
             };
 
             function checkIEEE754(buf, value, offset, ext, max, min) {
-              if (offset + ext > buf.length)
-                throw new RangeError("Index out of range");
-              if (offset < 0) throw new RangeError("Index out of range");
+              if (offset + ext > buf.length) throw new RangeError('Index out of range');
+              if (offset < 0) throw new RangeError('Index out of range');
             }
 
             function writeFloat(buf, value, offset, littleEndian, noAssert) {
               value = +value;
               offset = offset >>> 0;
               if (!noAssert) {
-                checkIEEE754(
-                  buf,
-                  value,
-                  offset,
-                  4,
-                  3.4028234663852886e38,
-                  -3.4028234663852886e38
-                );
+                checkIEEE754(buf, value, offset, 4, 3.4028234663852886e38, -3.4028234663852886e38);
               }
               ieee754.write(buf, value, offset, littleEndian, 23, 4);
               return offset + 4;
             }
 
-            Buffer.prototype.writeFloatLE = function writeFloatLE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
               return writeFloat(this, value, offset, true, noAssert);
             };
 
-            Buffer.prototype.writeFloatBE = function writeFloatBE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
               return writeFloat(this, value, offset, false, noAssert);
             };
 
@@ -2001,38 +1740,24 @@
                   offset,
                   8,
                   1.7976931348623157e308,
-                  -1.7976931348623157e308
+                  -1.7976931348623157e308,
                 );
               }
               ieee754.write(buf, value, offset, littleEndian, 52, 8);
               return offset + 8;
             }
 
-            Buffer.prototype.writeDoubleLE = function writeDoubleLE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
               return writeDouble(this, value, offset, true, noAssert);
             };
 
-            Buffer.prototype.writeDoubleBE = function writeDoubleBE(
-              value,
-              offset,
-              noAssert
-            ) {
+            Buffer.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
               return writeDouble(this, value, offset, false, noAssert);
             };
 
             // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
-            Buffer.prototype.copy = function copy(
-              target,
-              targetStart,
-              start,
-              end
-            ) {
-              if (!Buffer.isBuffer(target))
-                throw new TypeError("argument should be a Buffer");
+            Buffer.prototype.copy = function copy(target, targetStart, start, end) {
+              if (!Buffer.isBuffer(target)) throw new TypeError('argument should be a Buffer');
               if (!start) start = 0;
               if (!end && end !== 0) end = this.length;
               if (targetStart >= target.length) targetStart = target.length;
@@ -2045,11 +1770,10 @@
 
               // Fatal error conditions
               if (targetStart < 0) {
-                throw new RangeError("targetStart out of bounds");
+                throw new RangeError('targetStart out of bounds');
               }
-              if (start < 0 || start >= this.length)
-                throw new RangeError("Index out of range");
-              if (end < 0) throw new RangeError("sourceEnd out of bounds");
+              if (start < 0 || start >= this.length) throw new RangeError('Index out of range');
+              if (end < 0) throw new RangeError('sourceEnd out of bounds');
 
               // Are we oob?
               if (end > this.length) end = this.length;
@@ -2059,27 +1783,16 @@
 
               var len = end - start;
 
-              if (
-                this === target &&
-                typeof Uint8Array.prototype.copyWithin === "function"
-              ) {
+              if (this === target && typeof Uint8Array.prototype.copyWithin === 'function') {
                 // Use built-in when available, missing from IE11
                 this.copyWithin(targetStart, start, end);
-              } else if (
-                this === target &&
-                start < targetStart &&
-                targetStart < end
-              ) {
+              } else if (this === target && start < targetStart && targetStart < end) {
                 // descending copy from end
                 for (var i = len - 1; i >= 0; --i) {
                   target[i + targetStart] = this[i + start];
                 }
               } else {
-                Uint8Array.prototype.set.call(
-                  target,
-                  this.subarray(start, end),
-                  targetStart
-                );
+                Uint8Array.prototype.set.call(target, this.subarray(start, end), targetStart);
               }
 
               return len;
@@ -2091,41 +1804,35 @@
             //    buffer.fill(string[, offset[, end]][, encoding])
             Buffer.prototype.fill = function fill(val, start, end, encoding) {
               // Handle string cases:
-              if (typeof val === "string") {
-                if (typeof start === "string") {
+              if (typeof val === 'string') {
+                if (typeof start === 'string') {
                   encoding = start;
                   start = 0;
                   end = this.length;
-                } else if (typeof end === "string") {
+                } else if (typeof end === 'string') {
                   encoding = end;
                   end = this.length;
                 }
-                if (encoding !== undefined && typeof encoding !== "string") {
-                  throw new TypeError("encoding must be a string");
+                if (encoding !== undefined && typeof encoding !== 'string') {
+                  throw new TypeError('encoding must be a string');
                 }
-                if (
-                  typeof encoding === "string" &&
-                  !Buffer.isEncoding(encoding)
-                ) {
-                  throw new TypeError("Unknown encoding: " + encoding);
+                if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+                  throw new TypeError('Unknown encoding: ' + encoding);
                 }
                 if (val.length === 1) {
                   var code = val.charCodeAt(0);
-                  if (
-                    (encoding === "utf8" && code < 128) ||
-                    encoding === "latin1"
-                  ) {
+                  if ((encoding === 'utf8' && code < 128) || encoding === 'latin1') {
                     // Fast path: If `val` fits into a single byte, use that numeric value.
                     val = code;
                   }
                 }
-              } else if (typeof val === "number") {
+              } else if (typeof val === 'number') {
                 val = val & 255;
               }
 
               // Invalid ranges are not set to a default, so can range check early.
               if (start < 0 || this.length < start || this.length < end) {
-                throw new RangeError("Out of range index");
+                throw new RangeError('Out of range index');
               }
 
               if (end <= start) {
@@ -2138,19 +1845,15 @@
               if (!val) val = 0;
 
               var i;
-              if (typeof val === "number") {
+              if (typeof val === 'number') {
                 for (i = start; i < end; ++i) {
                   this[i] = val;
                 }
               } else {
-                var bytes = Buffer.isBuffer(val)
-                  ? val
-                  : Buffer.from(val, encoding);
+                var bytes = Buffer.isBuffer(val) ? val : Buffer.from(val, encoding);
                 var len = bytes.length;
                 if (len === 0) {
-                  throw new TypeError(
-                    'The value "' + val + '" is invalid for argument "value"'
-                  );
+                  throw new TypeError('The value "' + val + '" is invalid for argument "value"');
                 }
                 for (i = 0; i < end - start; ++i) {
                   this[i + start] = bytes[i % len];
@@ -2167,20 +1870,20 @@
 
             function base64clean(str) {
               // Node takes equal signs as end of the Base64 encoding
-              str = str.split("=")[0];
+              str = str.split('=')[0];
               // Node strips out invalid characters like \n and \t from the string, base64-js does not
-              str = str.trim().replace(INVALID_BASE64_RE, "");
+              str = str.trim().replace(INVALID_BASE64_RE, '');
               // Node converts strings with length < 2 to ''
-              if (str.length < 2) return "";
+              if (str.length < 2) return '';
               // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
               while (str.length % 4 !== 0) {
-                str = str + "=";
+                str = str + '=';
               }
               return str;
             }
 
             function toHex(n) {
-              if (n < 16) return "0" + n.toString(16);
+              if (n < 16) return '0' + n.toString(16);
               return n.toString(16);
             }
 
@@ -2223,9 +1926,7 @@
                   }
 
                   // valid surrogate pair
-                  codePoint =
-                    (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) +
-                    0x10000;
+                  codePoint = (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) + 0x10000;
                 } else if (leadSurrogate) {
                   // valid bmp char, but last char was a lead
                   if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
@@ -2239,16 +1940,13 @@
                   bytes.push(codePoint);
                 } else if (codePoint < 0x800) {
                   if ((units -= 2) < 0) break;
-                  bytes.push(
-                    (codePoint >> 0x6) | 0xc0,
-                    (codePoint & 0x3f) | 0x80
-                  );
+                  bytes.push((codePoint >> 0x6) | 0xc0, (codePoint & 0x3f) | 0x80);
                 } else if (codePoint < 0x10000) {
                   if ((units -= 3) < 0) break;
                   bytes.push(
                     (codePoint >> 0xc) | 0xe0,
                     ((codePoint >> 0x6) & 0x3f) | 0x80,
-                    (codePoint & 0x3f) | 0x80
+                    (codePoint & 0x3f) | 0x80,
                   );
                 } else if (codePoint < 0x110000) {
                   if ((units -= 4) < 0) break;
@@ -2256,10 +1954,10 @@
                     (codePoint >> 0x12) | 0xf0,
                     ((codePoint >> 0xc) & 0x3f) | 0x80,
                     ((codePoint >> 0x6) & 0x3f) | 0x80,
-                    (codePoint & 0x3f) | 0x80
+                    (codePoint & 0x3f) | 0x80,
                   );
                 } else {
-                  throw new Error("Invalid code point");
+                  throw new Error('Invalid code point');
                 }
               }
 
@@ -2320,9 +2018,9 @@
               return obj !== obj; // eslint-disable-line no-self-compare
             }
           }).call(this);
-        }).call(this, require("buffer").Buffer);
+        }).call(this, require('buffer').Buffer);
       },
-      { "base64-js": 2, buffer: 3, ieee754: 4 },
+      { 'base64-js': 2, buffer: 3, ieee754: 4 },
     ],
     4: [
       function (require, module, exports) {
@@ -2342,20 +2040,12 @@
           e = s & ((1 << -nBits) - 1);
           s >>= -nBits;
           nBits += eLen;
-          for (
-            ;
-            nBits > 0;
-            e = e * 256 + buffer[offset + i], i += d, nBits -= 8
-          ) {}
+          for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
           m = e & ((1 << -nBits) - 1);
           e >>= -nBits;
           nBits += mLen;
-          for (
-            ;
-            nBits > 0;
-            m = m * 256 + buffer[offset + i], i += d, nBits -= 8
-          ) {}
+          for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
           if (e === 0) {
             e = 1 - eBias;
@@ -2411,19 +2101,11 @@
             }
           }
 
-          for (
-            ;
-            mLen >= 8;
-            buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8
-          ) {}
+          for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
 
           e = (e << mLen) | m;
           eLen += mLen;
-          for (
-            ;
-            eLen > 0;
-            buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8
-          ) {}
+          for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
 
           buffer[offset + i - d] |= s * 128;
         };
@@ -2432,145 +2114,145 @@
     ],
     5: [
       function (require, module, exports) {
-        const SpooderVersion = "0.5.0";
-        const OSC = require("osc-js");
-        console.log("OSC GET");
+        const SpooderVersion = '0.5.0';
+        const OSC = require('osc-js');
+        console.log('OSC GET');
 
-        let osc = null;
-        let tcpPlugin = null;
-        window.oscConnecting = false;
+        var osc = null;
+        var tcpPlugin = null;
         window.oscConnected = false;
 
-        let goodInterval = null;
-        let lastGood = null;
+        var goodInterval = null;
+        var lastGood = null;
 
-        let oscIP = null;
-        let oscPort = null;
-        let udp = false;
-        window.pluginName = window.location.pathname.split("/")[2];
+        window.oscIP = null;
+        window.oscPort = null;
+        window.udp = false;
+        window.pluginName = window.location.pathname.split('/')[2];
         window.pluginSettings = null;
-        window.getAssetPath = (asset) => {
-          return window.location.origin + "/assets/" + pluginName + "/" + asset;
-        };
-
-        let isExternal = null;
+        window.isExternal = window.location.protocol === 'https:';
 
         // Create variables for the SVGs using document.createElement
-        let faPlug = document.createElement("div");
+        let faPlug = document.createElement('div');
         faPlug.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width='100%' height='100%' viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 0C78.3 0 64 14.3 64 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l0 32c0 77.4 55 142 128 156.8l0 67.2c0 17.7 14.3 32 32 32s32-14.3 32-32l0-67.2C297 398 352 333.4 352 256l0-32c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 160z"/></svg>`;
-        faPlug.style.width = "100%";
-        faPlug.style.height = "100%";
+        faPlug.style.width = '100%';
+        faPlug.style.height = '100%';
 
-        let faPlugCheck = document.createElement("div");
+        let faPlugCheck = document.createElement('div');
         faPlugCheck.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width='100%' height='100%' viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 0C78.3 0 64 14.3 64 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l0 32c0 77.4 55 142 128 156.8l0 67.2c0 17.7 14.3 32 32 32s32-14.3 32-32l0-67.2c12.3-2.5 24.1-6.4 35.1-11.5c-2.1-10.8-3.1-21.9-3.1-33.3c0-80.3 53.8-148 127.3-169.2c.5-2.2 .7-4.5 .7-6.8c0-17.7-14.3-32-32-32L32 160zM576 368a144 144 0 1 0 -288 0 144 144 0 1 0 288 0zm-76.7-43.3c6.2 6.2 6.2 16.4 0 22.6l-72 72c-6.2 6.2-16.4 6.2-22.6 0l-40-40c-6.2-6.2-6.2-16.4 0-22.6s16.4-6.2 22.6 0L416 385.4l60.7-60.7c6.2-6.2 16.4-6.2 22.6 0z"/></svg>`;
-        faPlugCheck.style.width = "100%";
-        faPlugCheck.style.height = "100%";
+        faPlugCheck.style.width = '100%';
+        faPlugCheck.style.height = '100%';
 
-        let faPlugX = document.createElement("div");
+        let faPlugX = document.createElement('div');
         faPlugX.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 0C78.3 0 64 14.3 64 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l0 32c0 77.4 55 142 128 156.8l0 67.2c0 17.7 14.3 32 32 32s32-14.3 32-32l0-67.2c12.3-2.5 24.1-6.4 35.1-11.5c-2.1-10.8-3.1-21.9-3.1-33.3c0-80.3 53.8-148 127.3-169.2c.5-2.2 .7-4.5 .7-6.8c0-17.7-14.3-32-32-32L32 160zM432 512a144 144 0 1 0 0-288 144 144 0 1 0 0 288zm59.3-180.7L454.6 368l36.7 36.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0L432 390.6l-36.7 36.7c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6L409.4 368l-36.7-36.7c-6.2-6.2-6.2-16.4 0-22.6s16.4-6.2 22.6 0L432 345.4l36.7-36.7c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>`;
-        faPlugX.style.width = "100%";
-        faPlugX.style.height = "100%";
+        faPlugX.style.width = '100%';
+        faPlugX.style.height = '100%';
 
-        let alertDiv = document.createElement("div");
-        alertDiv.id = "alertDiv";
-        alertDiv.style.borderRadius = "50%";
-        alertDiv.style.padding = "10px";
-        alertDiv.style.position = "absolute";
-        alertDiv.style.top = "0px";
-        alertDiv.style.right = "0px";
-        alertDiv.style.height = "100px";
-        alertDiv.style.zIndex = "9999999999";
-        alertDiv.style.width = "100px";
-        alertDiv.style.display = "flex";
-        alertDiv.style.opacity = "1.0";
-        alertDiv.style.backgroundColor = "rgba(255,255,0, 0.75)";
-        alertDiv.style.transition = "opacity 0.5s ease-in-out";
+        let alertDiv = document.createElement('div');
+        alertDiv.id = 'alertDiv';
+        alertDiv.style.borderRadius = '50%';
+        alertDiv.style.padding = '10px';
+        alertDiv.style.position = 'absolute';
+        alertDiv.style.top = '0px';
+        alertDiv.style.right = '0px';
+        alertDiv.style.height = '100px';
+        alertDiv.style.zIndex = '9999999999';
+        alertDiv.style.width = '100px';
+        alertDiv.style.display = 'flex';
+        alertDiv.style.opacity = '1.0';
+        alertDiv.style.backgroundColor = 'rgba(255,255,0, 0.75)';
+        alertDiv.style.transition = 'opacity 0.5s ease-in-out';
         alertDiv.innerHTML = faPlug.outerHTML;
 
-        document.body.appendChild(alertDiv);
+        document.onreadystatechange = function () {
+          if (document.readyState === 'complete') {
+            document.body.appendChild(alertDiv);
+          }
+        };
 
-        function setAlertToRed(){
-          alertDiv.style.backgroundColor = "rgba(255,0,0, 0.75)";
-          alertDiv.style.width = "250px";
-          alertDiv.style.borderRadius = "15px";
-            alertDiv.style.opacity = "1.0";
-            alertDiv.innerHTML = `<div style='width:100%; display:flex; align-items:center; justify-content:space-between'><div style='font-size:24px; font-weight:bold; font-family:sans-serif'>Ctrl+Shift+I</div><div style='width:100px'>${faPlugX.outerHTML}</div></div>`;
+        function setAlertToRed() {
+          alertDiv.style.backgroundColor = 'rgba(255,0,0, 0.75)';
+          alertDiv.style.width = '250px';
+          alertDiv.style.borderRadius = '15px';
+          alertDiv.style.opacity = '1.0';
+          alertDiv.innerHTML = `<div style='width:100%; display:flex; align-items:center; justify-content:space-between'><div style='font-size:24px; font-weight:bold; font-family:sans-serif'>Ctrl+Shift+I</div><div style='width:100px'>${faPlugX.outerHTML}</div></div>`;
         }
 
-        function setAlertToYellow(){
-          alertDiv.style.backgroundColor = "rgba(255,255,0, 0.75)";
-            alertDiv.style.opacity = "1.0";
-            alertDiv.style.width = "100px";
-            alertDiv.style.borderRadius = "50%";
-            alertDiv.innerHTML = faPlug.outerHTML;
+        function setAlertToYellow() {
+          alertDiv.style.backgroundColor = 'rgba(255,255,0, 0.75)';
+          alertDiv.style.opacity = '1.0';
+          alertDiv.style.width = '100px';
+          alertDiv.style.borderRadius = '50%';
+          alertDiv.innerHTML = faPlug.outerHTML;
         }
 
-        function setAlertToGreen(){
-          alertDiv.style.backgroundColor = "rgba(0,255,0, 0.75)";
-            alertDiv.style.opacity = "1.0";
-            alertDiv.style.width = "100px";
-            alertDiv.style.borderRadius = "50%";
-            alertDiv.innerHTML = faPlugCheck.outerHTML;
+        function setAlertToGreen() {
+          alertDiv.style.backgroundColor = 'rgba(0,255,0, 0.75)';
+          alertDiv.style.opacity = '1.0';
+          alertDiv.style.width = '100px';
+          alertDiv.style.borderRadius = '50%';
+          alertDiv.innerHTML = faPlugCheck.outerHTML;
         }
 
         getOSCSettings();
 
         async function getOSCSettings() {
-          var oscSettingsRaw = await fetch(
-            window.location.origin + "/plugin/get?plugin=" + pluginName
+          window.getAssetPath = (asset) => {
+            return window.location.origin + '/assets/' + pluginName + '/' + asset;
+          };
+          const urlParams = new URLSearchParams(window.location.search);
+          const key = urlParams.get('key');
+          const oscSettingsRaw = await fetch(
+            window.location.origin + '/plugin/get?plugin=' + pluginName + '&key=' + key,
           ).then((response) => response.json());
-          var oscSettings = null;
-          try {
-            oscSettings = JSON.parse(oscSettingsRaw);
-          } catch (e) {
+          if (!oscSettingsRaw || !oscSettingsRaw.express) {
+            console.error('OSC settings not found for plugin:', pluginName);
+          }
+
+          let oscSettings = null;
+
+          if (oscSettingsRaw.express) {
             oscSettings = JSON.parse(oscSettingsRaw.express);
+          } else {
+            oscSettings = oscSettingsRaw;
           }
 
           pluginSettings = oscSettings.settings;
-          oscIP = oscSettings.host;
-          oscPort = oscSettings.port;
-          isExternal = oscSettings.external;
-          initOSC(oscIP, oscPort);
+          window.shareInfo = oscSettings.shareInfo;
+          initOSC();
         }
 
-        function initOSC(serverIP, serverPort) {
-          if (isExternal) {
-            serverIP = serverIP.substring("https://".length);
-            tcpPlugin = new OSC.WebsocketClientPlugin({
-              host: serverIP,
-              port: null,
-              secure: true,
-            });
+        function initOSC() {
+          const host = window.location.host;
+          const protocol = window.location.protocol;
+          if (protocol === 'https:') {
+            tcpPlugin = new OSC.WebsocketClientPlugin({ url: `wss://${host}/osc` });
           } else {
             tcpPlugin = new OSC.WebsocketClientPlugin({
-              host: serverIP,
-              port: serverPort,
-              secure: false,
+              url: `ws://${host}/osc`,
             });
           }
 
           osc = new OSC({ plugin: tcpPlugin });
 
-          
-          osc.on("open", () => {
-            console.log("OSC OPEN", osc);
-            if (typeof onOSCOpen != "undefined") {
+          osc.on('open', () => {
+            console.log('OSC OPEN', osc);
+            if (typeof onOSCOpen != 'undefined') {
               onOSCOpen();
             }
 
             sendOSC(
-              "/" + pluginName + "/connect",
+              '/' + pluginName + '/connect',
               JSON.stringify({
                 version: SpooderVersion,
                 name: pluginName,
-                type: window.location.pathname.split("/")[1],
-                external: isExternal,
-              })
+                type: window.location.pathname.split('/')[1],
+              }),
             );
             oscConnecting = false;
             setAlertToGreen();
             setTimeout(() => {
-              alertDiv.style.opacity = "0.0";
+              alertDiv.style.opacity = '0.0';
             }, 3000);
 
             lastGood = Date.now();
@@ -2582,21 +2264,20 @@
               if (osc.status() == 1) {
                 if (!oscConnected) {
                   sendOSC(
-                    "/" + pluginName + "/connect",
+                    '/' + pluginName + '/connect',
                     JSON.stringify({
                       version: SpooderVersion,
                       name: pluginName,
-                      type: window.location.pathname.split("/")[1],
-                      external: isExternal,
-                    })
+                      type: window.location.pathname.split('/')[1],
+                    }),
                   );
                 }
               } else {
                 if (oscConnected) {
                   oscConnected = false;
                   setAlertToRed();
-                  window.dispatchEvent(new Event("lost_connection"));
-                } else if(!oscConnecting) {
+                  window.dispatchEvent(new Event('lost_connection'));
+                } else if (!oscConnecting) {
                   oscConnecting = true;
                   setAlertToYellow();
                   osc.open();
@@ -2605,41 +2286,43 @@
             }, 1000);
           });
 
-          osc.on("/" + pluginName + "/connect/success", () => {
+          osc.on('/' + pluginName + '/connect/success', () => {
             if (oscConnected) {
               return;
             }
             oscConnected = true;
-            if (typeof onConnect != "undefined") {
+            if (typeof onConnect != 'undefined') {
               onConnect();
             }
           });
 
-          osc.on("*", (message) => {
-            if (typeof getOSCMessage != "undefined") {
+          osc.on('*', (message) => {
+            if (typeof getOSCMessage != 'undefined') {
               getOSCMessage(message);
             }
           });
-          
-          osc.on("close", () => {
+
+          osc.on('close', () => {
             oscConnecting = false;
             if (oscConnected) {
               oscConnected = false;
-              window.dispatchEvent(new Event("lost_connection"));
+              window.dispatchEvent(new Event('lost_connection'));
             }
           });
 
-          osc.on("error", () => {
-            console.error("Failed to connect to OSC. Check your host IP and osc tcp port in your Spooder config! If it's correct, then maybe your firewall is blocking or your Spooder is down.");
+          osc.on('error', () => {
+            console.error(
+              "Failed to connect to OSC. Check your host IP and osc tcp port in your Spooder config! If it's correct, then maybe your firewall is blocking or your Spooder is down.",
+            );
             setAlertToRed();
           });
 
-          console.log("OSC CONNECTING", osc);
+          console.log('OSC CONNECTING', osc);
 
           osc.open();
         }
 
-        function sendOSC(address, ...message) {
+        window.sendOSC = function (address, ...message) {
           let pMessage = null;
           if (message.length == 1) {
             pMessage = message[0];
@@ -2647,7 +2330,7 @@
             pMessage = message;
           }
 
-          if (typeof pMessage == "object" && !Array.isArray(pMessage)) {
+          if (typeof pMessage == 'object' && !Array.isArray(pMessage)) {
             pMessage = JSON.stringify(pMessage);
           }
           if (Array.isArray(pMessage)) {
@@ -2655,11 +2338,11 @@
           } else {
             osc.send(new OSC.Message(address, pMessage));
           }
-        }
+        };
 
         window.onerror = function (event) {
           if (oscConnected == true) {
-            sendOSC("/spooder/plugin/error", {
+            sendOSC('/spooder/plugin/error', {
               name: window.location.href,
               message: event,
               type: event.type,
@@ -2668,7 +2351,7 @@
           return false;
         };
       },
-      { "osc-js": 7 },
+      { 'osc-js': 7 },
     ],
     6: [
       function (require, module, exports) {
@@ -2678,15 +2361,15 @@
 
             var ws = null;
 
-            if (typeof WebSocket !== "undefined") {
+            if (typeof WebSocket !== 'undefined') {
               ws = WebSocket;
-            } else if (typeof MozWebSocket !== "undefined") {
+            } else if (typeof MozWebSocket !== 'undefined') {
               ws = MozWebSocket;
-            } else if (typeof global !== "undefined") {
+            } else if (typeof global !== 'undefined') {
               ws = global.WebSocket || global.MozWebSocket;
-            } else if (typeof window !== "undefined") {
+            } else if (typeof window !== 'undefined') {
               ws = window.WebSocket || window.MozWebSocket;
-            } else if (typeof self !== "undefined") {
+            } else if (typeof self !== 'undefined') {
               ws = self.WebSocket || self.MozWebSocket;
             }
 
@@ -2694,13 +2377,13 @@
           }).call(this);
         }).call(
           this,
-          typeof global !== "undefined"
+          typeof global !== 'undefined'
             ? global
-            : typeof self !== "undefined"
-            ? self
-            : typeof window !== "undefined"
-            ? window
-            : {}
+            : typeof self !== 'undefined'
+              ? self
+              : typeof window !== 'undefined'
+                ? window
+                : {},
         );
       },
       {},
@@ -2710,21 +2393,18 @@
         (function (global, Buffer, __dirname) {
           (function () {
             (function (global, factory) {
-              typeof exports === "object" && typeof module !== "undefined"
+              typeof exports === 'object' && typeof module !== 'undefined'
                 ? (module.exports = factory())
-                : typeof define === "function" && define.amd
-                ? define(factory)
-                : ((global =
-                    typeof globalThis !== "undefined"
-                      ? globalThis
-                      : global || self),
-                  (global.OSC = factory()));
+                : typeof define === 'function' && define.amd
+                  ? define(factory)
+                  : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self),
+                    (global.OSC = factory()));
             })(this, function () {
-              "use strict";
+              'use strict';
 
               function _classCallCheck(instance, Constructor) {
                 if (!(instance instanceof Constructor)) {
-                  throw new TypeError("Cannot call a class as a function");
+                  throw new TypeError('Cannot call a class as a function');
                 }
               }
 
@@ -2733,14 +2413,13 @@
                   var descriptor = props[i];
                   descriptor.enumerable = descriptor.enumerable || false;
                   descriptor.configurable = true;
-                  if ("value" in descriptor) descriptor.writable = true;
+                  if ('value' in descriptor) descriptor.writable = true;
                   Object.defineProperty(target, descriptor.key, descriptor);
                 }
               }
 
               function _createClass(Constructor, protoProps, staticProps) {
-                if (protoProps)
-                  _defineProperties(Constructor.prototype, protoProps);
+                if (protoProps) _defineProperties(Constructor.prototype, protoProps);
                 if (staticProps) _defineProperties(Constructor, staticProps);
                 return Constructor;
               }
@@ -2767,10 +2446,7 @@
                   var symbols = Object.getOwnPropertySymbols(object);
                   if (enumerableOnly)
                     symbols = symbols.filter(function (sym) {
-                      return Object.getOwnPropertyDescriptor(
-                        object,
-                        sym
-                      ).enumerable;
+                      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
                     });
                   keys.push.apply(keys, symbols);
                 }
@@ -2787,16 +2463,13 @@
                       _defineProperty(target, key, source[key]);
                     });
                   } else if (Object.getOwnPropertyDescriptors) {
-                    Object.defineProperties(
-                      target,
-                      Object.getOwnPropertyDescriptors(source)
-                    );
+                    Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
                   } else {
                     ownKeys(Object(source)).forEach(function (key) {
                       Object.defineProperty(
                         target,
                         key,
-                        Object.getOwnPropertyDescriptor(source, key)
+                        Object.getOwnPropertyDescriptor(source, key),
                       );
                     });
                   }
@@ -2806,22 +2479,17 @@
               }
 
               function _inherits(subClass, superClass) {
-                if (typeof superClass !== "function" && superClass !== null) {
-                  throw new TypeError(
-                    "Super expression must either be null or a function"
-                  );
+                if (typeof superClass !== 'function' && superClass !== null) {
+                  throw new TypeError('Super expression must either be null or a function');
                 }
 
-                subClass.prototype = Object.create(
-                  superClass && superClass.prototype,
-                  {
-                    constructor: {
-                      value: subClass,
-                      writable: true,
-                      configurable: true,
-                    },
-                  }
-                );
+                subClass.prototype = Object.create(superClass && superClass.prototype, {
+                  constructor: {
+                    value: subClass,
+                    writable: true,
+                    configurable: true,
+                  },
+                });
                 if (superClass) _setPrototypeOf(subClass, superClass);
               }
 
@@ -2846,15 +2514,12 @@
               }
 
               function _isNativeReflectConstruct() {
-                if (typeof Reflect === "undefined" || !Reflect.construct)
-                  return false;
+                if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
                 if (Reflect.construct.sham) return false;
-                if (typeof Proxy === "function") return true;
+                if (typeof Proxy === 'function') return true;
 
                 try {
-                  Date.prototype.toString.call(
-                    Reflect.construct(Date, [], function () {})
-                  );
+                  Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
                   return true;
                 } catch (e) {
                   return false;
@@ -2864,7 +2529,7 @@
               function _assertThisInitialized(self) {
                 if (self === void 0) {
                   throw new ReferenceError(
-                    "this hasn't been initialised - super() hasn't been called"
+                    "this hasn't been initialised - super() hasn't been called",
                   );
                 }
 
@@ -2872,10 +2537,7 @@
               }
 
               function _possibleConstructorReturn(self, call) {
-                if (
-                  call &&
-                  (typeof call === "object" || typeof call === "function")
-                ) {
+                if (call && (typeof call === 'object' || typeof call === 'function')) {
                   return call;
                 }
 
@@ -2902,9 +2564,7 @@
               }
 
               function _superPropBase(object, property) {
-                while (
-                  !Object.prototype.hasOwnProperty.call(object, property)
-                ) {
+                while (!Object.prototype.hasOwnProperty.call(object, property)) {
                   object = _getPrototypeOf(object);
                   if (object === null) break;
                 }
@@ -2913,7 +2573,7 @@
               }
 
               function _get(target, property, receiver) {
-                if (typeof Reflect !== "undefined" && Reflect.get) {
+                if (typeof Reflect !== 'undefined' && Reflect.get) {
                   _get = Reflect.get;
                 } else {
                   _get = function _get(target, property, receiver) {
@@ -2940,16 +2600,16 @@
                 return Number(n) === n && n % 1 !== 0;
               }
               function isString(n) {
-                return typeof n === "string";
+                return typeof n === 'string';
               }
               function isArray(n) {
-                return Object.prototype.toString.call(n) === "[object Array]";
+                return Object.prototype.toString.call(n) === '[object Array]';
               }
               function isObject(n) {
-                return Object.prototype.toString.call(n) === "[object Object]";
+                return Object.prototype.toString.call(n) === '[object Object]';
               }
               function isFunction(n) {
-                return typeof n === "function";
+                return typeof n === 'function';
               }
               function isBlob(n) {
                 return n instanceof Uint8Array;
@@ -2958,15 +2618,15 @@
                 return n instanceof Date;
               }
               function isUndefined(n) {
-                return typeof n === "undefined";
+                return typeof n === 'undefined';
               }
               function pad(n) {
                 return (n + 3) & ~0x03;
               }
               function hasProperty(name) {
                 return Object.prototype.hasOwnProperty.call(
-                  typeof global !== "undefined" ? global : window,
-                  name
+                  typeof global !== 'undefined' ? global : window,
+                  name,
                 );
               }
               function dataView(obj) {
@@ -2980,51 +2640,46 @@
 
               function typeTag(item) {
                 if (isInt(item)) {
-                  return "i";
+                  return 'i';
                 } else if (isFloat(item)) {
-                  return "f";
+                  return 'f';
                 } else if (isString(item)) {
-                  return "s";
+                  return 's';
                 } else if (isBlob(item)) {
-                  return "b";
+                  return 'b';
                 }
-                throw new Error("OSC typeTag() found unknown value type");
+                throw new Error('OSC typeTag() found unknown value type');
               }
               function prepareAddress(obj) {
-                var address = "";
+                var address = '';
                 if (isArray(obj)) {
-                  return "/".concat(obj.join("/"));
+                  return '/'.concat(obj.join('/'));
                 } else if (isString(obj)) {
                   address = obj;
-                  if (
-                    address.length > 1 &&
-                    address[address.length - 1] === "/"
-                  ) {
+                  if (address.length > 1 && address[address.length - 1] === '/') {
                     address = address.slice(0, address.length - 1);
                   }
-                  if (address.length > 1 && address[0] !== "/") {
-                    address = "/".concat(address);
+                  if (address.length > 1 && address[0] !== '/') {
+                    address = '/'.concat(address);
                   }
                   return address;
                 }
-                throw new Error(
-                  "OSC prepareAddress() needs addresses of type array or string"
-                );
+                throw new Error('OSC prepareAddress() needs addresses of type array or string');
               }
               function prepareRegExPattern(str) {
                 var pattern;
                 if (!isString(str)) {
-                  throw new Error("OSC prepareRegExPattern() needs strings");
+                  throw new Error('OSC prepareRegExPattern() needs strings');
                 }
-                pattern = str.replace(/\./g, "\\.");
-                pattern = pattern.replace(/\(/g, "\\(");
-                pattern = pattern.replace(/\)/g, "\\)");
-                pattern = pattern.replace(/\{/g, "(");
-                pattern = pattern.replace(/\}/g, ")");
-                pattern = pattern.replace(/,/g, "|");
-                pattern = pattern.replace(/\[!/g, "[^");
-                pattern = pattern.replace(/\?/g, ".");
-                pattern = pattern.replace(/\*/g, ".*");
+                pattern = str.replace(/\./g, '\\.');
+                pattern = pattern.replace(/\(/g, '\\(');
+                pattern = pattern.replace(/\)/g, '\\)');
+                pattern = pattern.replace(/\{/g, '(');
+                pattern = pattern.replace(/\}/g, ')');
+                pattern = pattern.replace(/,/g, '|');
+                pattern = pattern.replace(/\[!/g, '[^');
+                pattern = pattern.replace(/\?/g, '.');
+                pattern = pattern.replace(/\*/g, '.*');
                 return pattern;
               }
               var EncodeHelper = (function () {
@@ -3035,7 +2690,7 @@
                 }
                 _createClass(EncodeHelper, [
                   {
-                    key: "add",
+                    key: 'add',
                     value: function add(item) {
                       var buffer = item.pack();
                       this.byteLength += buffer.byteLength;
@@ -3044,7 +2699,7 @@
                     },
                   },
                   {
-                    key: "merge",
+                    key: 'merge',
                     value: function merge() {
                       var result = new Uint8Array(this.byteLength);
                       var offset = 0;
@@ -3067,40 +2722,34 @@
                 }
                 _createClass(Atomic, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack(method, byteLength) {
                       if (!(method && byteLength)) {
                         throw new Error(
-                          "OSC Atomic cant't be packed without given method or byteLength"
+                          "OSC Atomic cant't be packed without given method or byteLength",
                         );
                       }
                       var data = new Uint8Array(byteLength);
                       var dataView = new DataView(data.buffer);
                       if (isUndefined(this.value)) {
-                        throw new Error(
-                          "OSC Atomic cant't be encoded with empty value"
-                        );
+                        throw new Error("OSC Atomic cant't be encoded with empty value");
                       }
                       dataView[method](this.offset, this.value, false);
                       return data;
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView, method, byteLength) {
                       var initialOffset =
-                        arguments.length > 3 && arguments[3] !== undefined
-                          ? arguments[3]
-                          : 0;
+                        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
                       if (!(dataView && method && byteLength)) {
                         throw new Error(
-                          "OSC Atomic cant't be unpacked without given dataView, method or byteLength"
+                          "OSC Atomic cant't be unpacked without given dataView, method or byteLength",
                         );
                       }
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC Atomic expects an instance of type DataView"
-                        );
+                        throw new Error('OSC Atomic expects an instance of type DataView');
                       }
                       this.value = dataView[method](initialOffset, false);
                       this.offset = initialOffset + byteLength;
@@ -3117,35 +2766,33 @@
                 function AtomicInt32(value) {
                   _classCallCheck(this, AtomicInt32);
                   if (value && !isInt(value)) {
-                    throw new Error(
-                      "OSC AtomicInt32 constructor expects value of type number"
-                    );
+                    throw new Error('OSC AtomicInt32 constructor expects value of type number');
                   }
                   return _super.call(this, value);
                 }
                 _createClass(AtomicInt32, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
-                      return _get(
-                        _getPrototypeOf(AtomicInt32.prototype),
-                        "pack",
-                        this
-                      ).call(this, "setInt32", 4);
+                      return _get(_getPrototypeOf(AtomicInt32.prototype), 'pack', this).call(
+                        this,
+                        'setInt32',
+                        4,
+                      );
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
-                      return _get(
-                        _getPrototypeOf(AtomicInt32.prototype),
-                        "unpack",
-                        this
-                      ).call(this, dataView, "getInt32", 4, initialOffset);
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+                      return _get(_getPrototypeOf(AtomicInt32.prototype), 'unpack', this).call(
+                        this,
+                        dataView,
+                        'getInt32',
+                        4,
+                        initialOffset,
+                      );
                     },
                   },
                 ]);
@@ -3153,21 +2800,16 @@
               })(Atomic);
 
               var STR_SLICE_SIZE = 65537;
-              var STR_ENCODING = "utf-8";
+              var STR_ENCODING = 'utf-8';
               function charCodesToString(charCodes) {
-                if (hasProperty("Buffer")) {
+                if (hasProperty('Buffer')) {
                   return Buffer.from(charCodes).toString(STR_ENCODING);
-                } else if (hasProperty("TextDecoder")) {
-                  return new TextDecoder(STR_ENCODING).decode(
-                    new Int8Array(charCodes)
-                  );
+                } else if (hasProperty('TextDecoder')) {
+                  return new TextDecoder(STR_ENCODING).decode(new Int8Array(charCodes));
                 }
-                var str = "";
+                var str = '';
                 for (var i = 0; i < charCodes.length; i += STR_SLICE_SIZE) {
-                  str += String.fromCharCode.apply(
-                    null,
-                    charCodes.slice(i, i + STR_SLICE_SIZE)
-                  );
+                  str += String.fromCharCode.apply(null, charCodes.slice(i, i + STR_SLICE_SIZE));
                 }
                 return str;
               }
@@ -3177,22 +2819,18 @@
                 function AtomicString(value) {
                   _classCallCheck(this, AtomicString);
                   if (value && !isString(value)) {
-                    throw new Error(
-                      "OSC AtomicString constructor expects value of type string"
-                    );
+                    throw new Error('OSC AtomicString constructor expects value of type string');
                   }
                   return _super.call(this, value);
                 }
                 _createClass(AtomicString, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
                       if (isUndefined(this.value)) {
-                        throw new Error(
-                          "OSC AtomicString can not be encoded with empty value"
-                        );
+                        throw new Error('OSC AtomicString can not be encoded with empty value');
                       }
-                      var terminated = "".concat(this.value, "\0");
+                      var terminated = ''.concat(this.value, '\0');
                       var byteLength = pad(terminated.length);
                       var buffer = new Uint8Array(byteLength);
                       for (var i = 0; i < terminated.length; i += 1) {
@@ -3202,16 +2840,12 @@
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC AtomicString expects an instance of type DataView"
-                        );
+                        throw new Error('OSC AtomicString expects an instance of type DataView');
                       }
                       var offset = initialOffset;
                       var charcode;
@@ -3226,9 +2860,7 @@
                         }
                       }
                       if (offset === dataView.length) {
-                        throw new Error(
-                          "OSC AtomicString found a malformed OSC string"
-                        );
+                        throw new Error('OSC AtomicString found a malformed OSC string');
                       }
                       this.offset = pad(offset);
                       this.value = charCodesToString(charCodes);
@@ -3244,17 +2876,13 @@
               var Timetag = (function () {
                 function Timetag() {
                   var seconds =
-                    arguments.length > 0 && arguments[0] !== undefined
-                      ? arguments[0]
-                      : 0;
+                    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
                   var fractions =
-                    arguments.length > 1 && arguments[1] !== undefined
-                      ? arguments[1]
-                      : 0;
+                    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                   _classCallCheck(this, Timetag);
                   if (!(isInt(seconds) && isInt(fractions))) {
                     throw new Error(
-                      "OSC Timetag constructor expects values of type integer number"
+                      'OSC Timetag constructor expects values of type integer number',
                     );
                   }
                   this.seconds = seconds;
@@ -3262,23 +2890,18 @@
                 }
                 _createClass(Timetag, [
                   {
-                    key: "timestamp",
+                    key: 'timestamp',
                     value: function timestamp(milliseconds) {
                       var seconds;
-                      if (typeof milliseconds === "number") {
+                      if (typeof milliseconds === 'number') {
                         seconds = milliseconds / 1000;
                         var rounded = Math.floor(seconds);
                         this.seconds = rounded + SECONDS_70_YEARS;
-                        this.fractions = Math.round(
-                          TWO_POWER_32 * (seconds - rounded)
-                        );
+                        this.fractions = Math.round(TWO_POWER_32 * (seconds - rounded));
                         return milliseconds;
                       }
                       seconds = this.seconds - SECONDS_70_YEARS;
-                      return (
-                        (seconds + Math.round(this.fractions / TWO_POWER_32)) *
-                        1000
-                      );
+                      return (seconds + Math.round(this.fractions / TWO_POWER_32)) * 1000;
                     },
                   },
                 ]);
@@ -3289,9 +2912,7 @@
                 var _super = _createSuper(AtomicTimetag);
                 function AtomicTimetag() {
                   var value =
-                    arguments.length > 0 && arguments[0] !== undefined
-                      ? arguments[0]
-                      : Date.now();
+                    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
                   _classCallCheck(this, AtomicTimetag);
                   var timetag = new Timetag();
                   if (value instanceof Timetag) {
@@ -3305,12 +2926,10 @@
                 }
                 _createClass(AtomicTimetag, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
                       if (isUndefined(this.value)) {
-                        throw new Error(
-                          "OSC AtomicTimetag can not be encoded with empty value"
-                        );
+                        throw new Error('OSC AtomicTimetag can not be encoded with empty value');
                       }
                       var _this$value = this.value,
                         seconds = _this$value.seconds,
@@ -3323,22 +2942,15 @@
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC AtomicTimetag expects an instance of type DataView"
-                        );
+                        throw new Error('OSC AtomicTimetag expects an instance of type DataView');
                       }
                       var seconds = dataView.getUint32(initialOffset, false);
-                      var fractions = dataView.getUint32(
-                        initialOffset + 4,
-                        false
-                      );
+                      var fractions = dataView.getUint32(initialOffset + 4, false);
                       this.value = new Timetag(seconds, fractions);
                       this.offset = initialOffset + 8;
                       return this.offset;
@@ -3354,20 +2966,16 @@
                 function AtomicBlob(value) {
                   _classCallCheck(this, AtomicBlob);
                   if (value && !isBlob(value)) {
-                    throw new Error(
-                      "OSC AtomicBlob constructor expects value of type Uint8Array"
-                    );
+                    throw new Error('OSC AtomicBlob constructor expects value of type Uint8Array');
                   }
                   return _super.call(this, value);
                 }
                 _createClass(AtomicBlob, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
                       if (isUndefined(this.value)) {
-                        throw new Error(
-                          "OSC AtomicBlob can not be encoded with empty value"
-                        );
+                        throw new Error('OSC AtomicBlob can not be encoded with empty value');
                       }
                       var byteLength = pad(this.value.byteLength);
                       var data = new Uint8Array(byteLength + 4);
@@ -3378,23 +2986,15 @@
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC AtomicBlob expects an instance of type DataView"
-                        );
+                        throw new Error('OSC AtomicBlob expects an instance of type DataView');
                       }
                       var byteLength = dataView.getInt32(initialOffset, false);
-                      this.value = new Uint8Array(
-                        dataView.buffer,
-                        initialOffset + 4,
-                        byteLength
-                      );
+                      this.value = new Uint8Array(dataView.buffer, initialOffset + 4, byteLength);
                       this.offset = pad(initialOffset + 4 + byteLength);
                       return this.offset;
                     },
@@ -3409,35 +3009,33 @@
                 function AtomicFloat32(value) {
                   _classCallCheck(this, AtomicFloat32);
                   if (value && !isFloat(value)) {
-                    throw new Error(
-                      "OSC AtomicFloat32 constructor expects value of type float"
-                    );
+                    throw new Error('OSC AtomicFloat32 constructor expects value of type float');
                   }
                   return _super.call(this, value);
                 }
                 _createClass(AtomicFloat32, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
-                      return _get(
-                        _getPrototypeOf(AtomicFloat32.prototype),
-                        "pack",
-                        this
-                      ).call(this, "setFloat32", 4);
+                      return _get(_getPrototypeOf(AtomicFloat32.prototype), 'pack', this).call(
+                        this,
+                        'setFloat32',
+                        4,
+                      );
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
-                      return _get(
-                        _getPrototypeOf(AtomicFloat32.prototype),
-                        "unpack",
-                        this
-                      ).call(this, dataView, "getFloat32", 4, initialOffset);
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+                      return _get(_getPrototypeOf(AtomicFloat32.prototype), 'unpack', this).call(
+                        this,
+                        dataView,
+                        'getFloat32',
+                        4,
+                        initialOffset,
+                      );
                     },
                   },
                 ]);
@@ -3448,13 +3046,11 @@
                 function Message() {
                   _classCallCheck(this, Message);
                   this.offset = 0;
-                  this.address = "";
-                  this.types = "";
+                  this.address = '';
+                  this.types = '';
                   this.args = [];
                   for (
-                    var _len = arguments.length,
-                      args = new Array(_len),
-                      _key = 0;
+                    var _len = arguments.length, args = new Array(_len), _key = 0;
                     _key < _len;
                     _key++
                   ) {
@@ -3463,7 +3059,7 @@
                   if (args.length > 0) {
                     if (!(isString(args[0]) || isArray(args[0]))) {
                       throw new Error(
-                        "OSC Message constructor first argument (address) must be a string or array"
+                        'OSC Message constructor first argument (address) must be a string or array',
                       );
                     }
                     this.address = prepareAddress(args.shift());
@@ -3471,35 +3067,30 @@
                       .map(function (item) {
                         return typeTag(item);
                       })
-                      .join("");
+                      .join('');
                     this.args = args;
                   }
                 }
                 _createClass(Message, [
                   {
-                    key: "add",
+                    key: 'add',
                     value: function add(item) {
                       if (isUndefined(item)) {
-                        throw new Error(
-                          "OSC Message needs a valid OSC Atomic Data Type"
-                        );
+                        throw new Error('OSC Message needs a valid OSC Atomic Data Type');
                       }
                       this.args.push(item);
                       this.types += typeTag(item);
                     },
                   },
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
-                      if (
-                        this.address.length === 0 ||
-                        this.address[0] !== "/"
-                      ) {
-                        throw new Error("OSC Message has an invalid address");
+                      if (this.address.length === 0 || this.address[0] !== '/') {
+                        throw new Error('OSC Message has an invalid address');
                       }
                       var encoder = new EncodeHelper();
                       encoder.add(new AtomicString(this.address));
-                      encoder.add(new AtomicString(",".concat(this.types)));
+                      encoder.add(new AtomicString(','.concat(this.types)));
                       if (this.args.length > 0) {
                         var argument;
                         this.args.forEach(function (value) {
@@ -3512,9 +3103,7 @@
                           } else if (isBlob(value)) {
                             argument = new AtomicBlob(value);
                           } else {
-                            throw new Error(
-                              "OSC Message found unknown argument type"
-                            );
+                            throw new Error('OSC Message found unknown argument type');
                           }
                           encoder.add(argument);
                         });
@@ -3523,33 +3112,22 @@
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC Message expects an instance of type DataView."
-                        );
+                        throw new Error('OSC Message expects an instance of type DataView.');
                       }
                       var address = new AtomicString();
                       address.unpack(dataView, initialOffset);
                       var types = new AtomicString();
                       types.unpack(dataView, address.offset);
-                      if (
-                        address.value.length === 0 ||
-                        address.value[0] !== "/"
-                      ) {
-                        throw new Error(
-                          "OSC Message found malformed or missing address string"
-                        );
+                      if (address.value.length === 0 || address.value[0] !== '/') {
+                        throw new Error('OSC Message found malformed or missing address string');
                       }
-                      if (types.value.length === 0 && types.value[0] !== ",") {
-                        throw new Error(
-                          "OSC Message found malformed or missing type string"
-                        );
+                      if (types.value.length === 0 && types.value[0] !== ',') {
+                        throw new Error('OSC Message found malformed or missing type string');
                       }
                       var offset = types.offset;
                       var next;
@@ -3557,18 +3135,16 @@
                       var args = [];
                       for (var i = 1; i < types.value.length; i += 1) {
                         type = types.value[i];
-                        if (type === "i") {
+                        if (type === 'i') {
                           next = new AtomicInt32();
-                        } else if (type === "f") {
+                        } else if (type === 'f') {
                           next = new AtomicFloat32();
-                        } else if (type === "s") {
+                        } else if (type === 's') {
                           next = new AtomicString();
-                        } else if (type === "b") {
+                        } else if (type === 'b') {
                           next = new AtomicBlob();
                         } else {
-                          throw new Error(
-                            "OSC Message found non-standard argument type"
-                          );
+                          throw new Error('OSC Message found non-standard argument type');
                         }
                         offset = next.unpack(dataView, offset);
                         args.push(next.value);
@@ -3584,7 +3160,7 @@
                 return Message;
               })();
 
-              var BUNDLE_TAG = "#bundle";
+              var BUNDLE_TAG = '#bundle';
               var Bundle = (function () {
                 function Bundle() {
                   var _this = this;
@@ -3593,9 +3169,7 @@
                   this.timetag = new AtomicTimetag();
                   this.bundleElements = [];
                   for (
-                    var _len = arguments.length,
-                      args = new Array(_len),
-                      _key = 0;
+                    var _len = arguments.length, args = new Array(_len), _key = 0;
                     _key < _len;
                     _key++
                   ) {
@@ -3608,10 +3182,7 @@
                       args[0].forEach(function (item) {
                         _this.add(item);
                       });
-                      if (
-                        args.length > 1 &&
-                        (args[1] instanceof Date || isInt(args[0]))
-                      ) {
+                      if (args.length > 1 && (args[1] instanceof Date || isInt(args[0]))) {
                         this.timetag = new AtomicTimetag(args[1]);
                       }
                     } else {
@@ -3623,31 +3194,25 @@
                 }
                 _createClass(Bundle, [
                   {
-                    key: "timestamp",
+                    key: 'timestamp',
                     value: function timestamp(ms) {
                       if (!isInt(ms)) {
-                        throw new Error(
-                          "OSC Bundle needs an integer for setting the timestamp"
-                        );
+                        throw new Error('OSC Bundle needs an integer for setting the timestamp');
                       }
                       this.timetag = new AtomicTimetag(ms);
                     },
                   },
                   {
-                    key: "add",
+                    key: 'add',
                     value: function add(item) {
-                      if (
-                        !(item instanceof Message || item instanceof Bundle)
-                      ) {
-                        throw new Error(
-                          "OSC Bundle contains only Messages and Bundles"
-                        );
+                      if (!(item instanceof Message || item instanceof Bundle)) {
+                        throw new Error('OSC Bundle contains only Messages and Bundles');
                       }
                       this.bundleElements.push(item);
                     },
                   },
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
                       var encoder = new EncodeHelper();
                       encoder.add(new AtomicString(BUNDLE_TAG));
@@ -3663,23 +3228,17 @@
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC Bundle expects an instance of type DataView"
-                        );
+                        throw new Error('OSC Bundle expects an instance of type DataView');
                       }
                       var parentHead = new AtomicString();
                       parentHead.unpack(dataView, initialOffset);
                       if (parentHead.value !== BUNDLE_TAG) {
-                        throw new Error(
-                          "OSC Bundle does not contain a valid #bundle head"
-                        );
+                        throw new Error('OSC Bundle does not contain a valid #bundle head');
                       }
                       var timetag = new AtomicTimetag();
                       var offset = timetag.unpack(dataView, parentHead.offset);
@@ -3710,45 +3269,32 @@
               var Packet = (function () {
                 function Packet(value) {
                   _classCallCheck(this, Packet);
-                  if (
-                    value &&
-                    !(value instanceof Message || value instanceof Bundle)
-                  ) {
-                    throw new Error(
-                      "OSC Packet value has to be Message or Bundle"
-                    );
+                  if (value && !(value instanceof Message || value instanceof Bundle)) {
+                    throw new Error('OSC Packet value has to be Message or Bundle');
                   }
                   this.value = value;
                   this.offset = 0;
                 }
                 _createClass(Packet, [
                   {
-                    key: "pack",
+                    key: 'pack',
                     value: function pack() {
                       if (!this.value) {
-                        throw new Error(
-                          "OSC Packet can not be encoded with empty body"
-                        );
+                        throw new Error('OSC Packet can not be encoded with empty body');
                       }
                       return this.value.pack();
                     },
                   },
                   {
-                    key: "unpack",
+                    key: 'unpack',
                     value: function unpack(dataView) {
                       var initialOffset =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : 0;
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
                       if (!(dataView instanceof DataView)) {
-                        throw new Error(
-                          "OSC Packet expects an instance of type DataView"
-                        );
+                        throw new Error('OSC Packet expects an instance of type DataView');
                       }
                       if (dataView.byteLength % 4 !== 0) {
-                        throw new Error(
-                          "OSC Packet byteLength has to be a multiple of four"
-                        );
+                        throw new Error('OSC Packet byteLength has to be a multiple of four');
                       }
                       var head = new AtomicString();
                       head.unpack(dataView, initialOffset);
@@ -3774,10 +3320,7 @@
               var EventHandler = (function () {
                 function EventHandler(options) {
                   _classCallCheck(this, EventHandler);
-                  this.options = _objectSpread2(
-                    _objectSpread2({}, defaultOptions),
-                    options
-                  );
+                  this.options = _objectSpread2(_objectSpread2({}, defaultOptions), options);
                   this.addressHandlers = [];
                   this.eventHandlers = {
                     open: [],
@@ -3788,31 +3331,27 @@
                 }
                 _createClass(EventHandler, [
                   {
-                    key: "dispatch",
+                    key: 'dispatch',
                     value: function dispatch(packet, rinfo) {
                       var _this = this;
                       if (!(packet instanceof Packet)) {
                         throw new Error(
-                          "OSC EventHander dispatch() accepts only arguments of type Packet"
+                          'OSC EventHander dispatch() accepts only arguments of type Packet',
                         );
                       }
                       if (!packet.value) {
-                        throw new Error(
-                          "OSC EventHander dispatch() can't read empty Packets"
-                        );
+                        throw new Error("OSC EventHander dispatch() can't read empty Packets");
                       }
                       if (packet.value instanceof Bundle) {
                         var bundle = packet.value;
-                        return bundle.bundleElements.forEach(function (
-                          bundleItem
-                        ) {
+                        return bundle.bundleElements.forEach(function (bundleItem) {
                           if (bundleItem instanceof Bundle) {
                             if (
                               bundle.timetag.value.timestamp() <
                               bundleItem.timetag.value.timestamp()
                             ) {
                               throw new Error(
-                                "OSC Bundle timestamp is older than the timestamp of enclosed Bundles"
+                                'OSC Bundle timestamp is older than the timestamp of enclosed Bundles',
                               );
                             }
                             return _this.dispatch(bundleItem);
@@ -3822,11 +3361,11 @@
                               message.address,
                               message,
                               bundle.timetag.value.timestamp(),
-                              rinfo
+                              rinfo,
                             );
                           }
                           throw new Error(
-                            "OSC EventHander dispatch() can't dispatch unknown Packet value"
+                            "OSC EventHander dispatch() can't dispatch unknown Packet value",
                           );
                         });
                       } else if (packet.value instanceof Message) {
@@ -3834,12 +3373,12 @@
                         return this.notify(message.address, message, 0, rinfo);
                       }
                       throw new Error(
-                        "OSC EventHander dispatch() can't dispatch unknown Packet value"
+                        "OSC EventHander dispatch() can't dispatch unknown Packet value",
                       );
                     },
                   },
                   {
-                    key: "call",
+                    key: 'call',
                     value: function call(name, data, rinfo) {
                       var success = false;
                       if (isString(name) && name in this.eventHandlers) {
@@ -3853,10 +3392,7 @@
                       var handlers = this.addressHandlers;
                       handlerKeys.forEach(function (key) {
                         var foundMatch = false;
-                        var regex = new RegExp(
-                          prepareRegExPattern(prepareAddress(name)),
-                          "g"
-                        );
+                        var regex = new RegExp(prepareRegExPattern(prepareAddress(name)), 'g');
                         var test = regex.test(key);
                         if (test && key.length === regex.lastIndex) {
                           foundMatch = true;
@@ -3864,13 +3400,10 @@
                         if (!foundMatch) {
                           var reverseRegex = new RegExp(
                             prepareRegExPattern(prepareAddress(key)),
-                            "g"
+                            'g',
                           );
                           var reverseTest = reverseRegex.test(name);
-                          if (
-                            reverseTest &&
-                            name.length === reverseRegex.lastIndex
-                          ) {
+                          if (reverseTest && name.length === reverseRegex.lastIndex) {
                             foundMatch = true;
                           }
                         }
@@ -3885,28 +3418,21 @@
                     },
                   },
                   {
-                    key: "notify",
+                    key: 'notify',
                     value: function notify() {
                       for (
-                        var _len = arguments.length,
-                          args = new Array(_len),
-                          _key = 0;
+                        var _len = arguments.length, args = new Array(_len), _key = 0;
                         _key < _len;
                         _key++
                       ) {
                         args[_key] = arguments[_key];
                       }
                       if (args.length === 0) {
-                        throw new Error(
-                          "OSC EventHandler can not be called without any argument"
-                        );
+                        throw new Error('OSC EventHandler can not be called without any argument');
                       }
                       if (args[0] instanceof Packet) {
                         return this.dispatch(args[0], args[1]);
-                      } else if (
-                        args[0] instanceof Bundle ||
-                        args[0] instanceof Message
-                      ) {
+                      } else if (args[0] instanceof Bundle || args[0] instanceof Message) {
                         return this.dispatch(new Packet(args[0]), args[1]);
                       } else if (!isString(args[0])) {
                         var packet = new Packet();
@@ -3925,9 +3451,7 @@
                         } else if (args[2] instanceof Date) {
                           timestamp = args[2].getTime();
                         } else {
-                          throw new Error(
-                            "OSC EventHandler timestamp has to be a number or Date"
-                          );
+                          throw new Error('OSC EventHandler timestamp has to be a number or Date');
                         }
                       }
                       var rinfo = null;
@@ -3951,17 +3475,15 @@
                     },
                   },
                   {
-                    key: "on",
+                    key: 'on',
                     value: function on(name, callback) {
                       if (!(isString(name) || isArray(name))) {
                         throw new Error(
-                          "OSC EventHandler accepts only strings or arrays for address patterns"
+                          'OSC EventHandler accepts only strings or arrays for address patterns',
                         );
                       }
                       if (!isFunction(callback)) {
-                        throw new Error(
-                          "OSC EventHandler callback has to be a function"
-                        );
+                        throw new Error('OSC EventHandler callback has to be a function');
                       }
                       this.uuid += 1;
                       var handler = {
@@ -3981,17 +3503,15 @@
                     },
                   },
                   {
-                    key: "off",
+                    key: 'off',
                     value: function off(name, subscriptionId) {
                       if (!(isString(name) || isArray(name))) {
                         throw new Error(
-                          "OSC EventHandler accepts only strings or arrays for address patterns"
+                          'OSC EventHandler accepts only strings or arrays for address patterns',
                         );
                       }
                       if (!isInt(subscriptionId)) {
-                        throw new Error(
-                          "OSC EventHandler subscription id has to be a number"
-                        );
+                        throw new Error('OSC EventHandler subscription id has to be a number');
                       }
                       var key;
                       var haystack;
@@ -4018,8 +3538,7 @@
                 return EventHandler;
               })();
 
-              var dgram =
-                typeof __dirname !== "undefined" ? require("dgram") : undefined;
+              var dgram = typeof __dirname !== 'undefined' ? require('dgram') : undefined;
               var STATUS = {
                 IS_NOT_INITIALIZED: -1,
                 IS_CONNECTING: 0,
@@ -4028,16 +3547,16 @@
                 IS_CLOSED: 3,
               };
               var defaultOpenOptions = {
-                host: "localhost",
+                host: 'localhost',
                 port: 41234,
                 exclusive: false,
               };
               var defaultSendOptions = {
-                host: "localhost",
+                host: 'localhost',
                 port: 41235,
               };
               var defaultOptions$1 = {
-                type: "udp4",
+                type: 'udp4',
                 open: defaultOpenOptions,
                 send: defaultSendOptions,
               };
@@ -4045,75 +3564,63 @@
                 return _objectSpread2(
                   _objectSpread2(
                     _objectSpread2(_objectSpread2({}, defaultOptions$1), base),
-                    custom
+                    custom,
                   ),
                   {},
                   {
                     open: _objectSpread2(
-                      _objectSpread2(
-                        _objectSpread2({}, defaultOptions$1.open),
-                        base.open
-                      ),
-                      custom.open
+                      _objectSpread2(_objectSpread2({}, defaultOptions$1.open), base.open),
+                      custom.open,
                     ),
                     send: _objectSpread2(
-                      _objectSpread2(
-                        _objectSpread2({}, defaultOptions$1.send),
-                        base.send
-                      ),
-                      custom.send
+                      _objectSpread2(_objectSpread2({}, defaultOptions$1.send), base.send),
+                      custom.send,
                     ),
-                  }
+                  },
                 );
               }
               var DatagramPlugin = (function () {
                 function DatagramPlugin() {
                   var _this = this;
                   var customOptions =
-                    arguments.length > 0 && arguments[0] !== undefined
-                      ? arguments[0]
-                      : {};
+                    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
                   _classCallCheck(this, DatagramPlugin);
                   if (!dgram) {
-                    throw new Error(
-                      "DatagramPlugin can not be used in browser context"
-                    );
+                    throw new Error('DatagramPlugin can not be used in browser context');
                   }
                   this.options = mergeOptions({}, customOptions);
                   this.socket = dgram.createSocket(this.options.type);
                   this.socketStatus = STATUS.IS_NOT_INITIALIZED;
-                  this.socket.on("message", function (message, rinfo) {
+                  this.socket.on('message', function (message, rinfo) {
                     _this.notify(message, rinfo);
                   });
-                  this.socket.on("error", function (error) {
-                    _this.notify("error", error);
+                  this.socket.on('error', function (error) {
+                    _this.notify('error', error);
                   });
                   this.notify = function () {};
                 }
                 _createClass(DatagramPlugin, [
                   {
-                    key: "registerNotify",
+                    key: 'registerNotify',
                     value: function registerNotify(fn) {
                       this.notify = fn;
                     },
                   },
                   {
-                    key: "status",
+                    key: 'status',
                     value: function status() {
                       return this.socketStatus;
                     },
                   },
                   {
-                    key: "open",
+                    key: 'open',
                     value: function open() {
                       var _this2 = this;
                       var customOptions =
-                        arguments.length > 0 && arguments[0] !== undefined
-                          ? arguments[0]
-                          : {};
+                        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
                       var options = _objectSpread2(
                         _objectSpread2({}, this.options.open),
-                        customOptions
+                        customOptions,
                       );
                       var port = options.port,
                         exclusive = options.exclusive;
@@ -4126,54 +3633,43 @@
                         },
                         function () {
                           _this2.socketStatus = STATUS.IS_OPEN;
-                          _this2.notify("open");
-                        }
+                          _this2.notify('open');
+                        },
                       );
                     },
                   },
                   {
-                    key: "close",
+                    key: 'close',
                     value: function close() {
                       var _this3 = this;
                       this.socketStatus = STATUS.IS_CLOSING;
                       this.socket.close(function () {
                         _this3.socketStatus = STATUS.IS_CLOSED;
-                        _this3.notify("close");
+                        _this3.notify('close');
                       });
                     },
                   },
                   {
-                    key: "send",
+                    key: 'send',
                     value: function send(binary) {
                       var customOptions =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : {};
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
                       var options = _objectSpread2(
                         _objectSpread2({}, this.options.send),
-                        customOptions
+                        customOptions,
                       );
                       var port = options.port,
                         host = options.host;
-                      this.socket.send(
-                        Buffer.from(binary),
-                        0,
-                        binary.byteLength,
-                        port,
-                        host
-                      );
+                      this.socket.send(Buffer.from(binary), 0, binary.byteLength, port, host);
                     },
                   },
                 ]);
                 return DatagramPlugin;
               })();
 
-              var dgram$1 =
-                typeof __dirname !== "undefined" ? require("dgram") : undefined;
+              var dgram$1 = typeof __dirname !== 'undefined' ? require('dgram') : undefined;
               var WebSocketServer =
-                typeof __dirname !== "undefined"
-                  ? require("isomorphic-ws").Server
-                  : undefined;
+                typeof __dirname !== 'undefined' ? require('isomorphic-ws').Server : undefined;
               var STATUS$1 = {
                 IS_NOT_INITIALIZED: -1,
                 IS_CONNECTING: 0,
@@ -4183,101 +3679,92 @@
               };
               var defaultOptions$2 = {
                 udpServer: {
-                  host: "localhost",
+                  host: 'localhost',
                   port: 41234,
                   exclusive: false,
                 },
                 udpClient: {
-                  host: "localhost",
+                  host: 'localhost',
                   port: 41235,
                 },
                 wsServer: {
-                  host: "localhost",
+                  host: 'localhost',
                   port: 8080,
                 },
-                receiver: "ws",
+                receiver: 'ws',
               };
               function mergeOptions$1(base, custom) {
                 return _objectSpread2(
                   _objectSpread2(
                     _objectSpread2(_objectSpread2({}, defaultOptions$2), base),
-                    custom
+                    custom,
                   ),
                   {},
                   {
                     udpServer: _objectSpread2(
                       _objectSpread2(
                         _objectSpread2({}, defaultOptions$2.udpServer),
-                        base.udpServer
+                        base.udpServer,
                       ),
-                      custom.udpServer
+                      custom.udpServer,
                     ),
                     udpClient: _objectSpread2(
                       _objectSpread2(
                         _objectSpread2({}, defaultOptions$2.udpClient),
-                        base.udpClient
+                        base.udpClient,
                       ),
-                      custom.udpClient
+                      custom.udpClient,
                     ),
                     wsServer: _objectSpread2(
-                      _objectSpread2(
-                        _objectSpread2({}, defaultOptions$2.wsServer),
-                        base.wsServer
-                      ),
-                      custom.wsServer
+                      _objectSpread2(_objectSpread2({}, defaultOptions$2.wsServer), base.wsServer),
+                      custom.wsServer,
                     ),
-                  }
+                  },
                 );
               }
               var BridgePlugin = (function () {
                 function BridgePlugin() {
                   var _this = this;
                   var customOptions =
-                    arguments.length > 0 && arguments[0] !== undefined
-                      ? arguments[0]
-                      : {};
+                    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
                   _classCallCheck(this, BridgePlugin);
                   if (!dgram$1 || !WebSocketServer) {
-                    throw new Error(
-                      "BridgePlugin can not be used in browser context"
-                    );
+                    throw new Error('BridgePlugin can not be used in browser context');
                   }
                   this.options = mergeOptions$1({}, customOptions);
                   this.websocket = null;
-                  this.socket = dgram$1.createSocket("udp4");
+                  this.socket = dgram$1.createSocket('udp4');
                   this.socketStatus = STATUS$1.IS_NOT_INITIALIZED;
-                  this.socket.on("message", function (message) {
+                  this.socket.on('message', function (message) {
                     _this.send(message, {
-                      receiver: "ws",
+                      receiver: 'ws',
                     });
                     _this.notify(message.buffer);
                   });
-                  this.socket.on("error", function (error) {
-                    _this.notify("error", error);
+                  this.socket.on('error', function (error) {
+                    _this.notify('error', error);
                   });
                   this.notify = function () {};
                 }
                 _createClass(BridgePlugin, [
                   {
-                    key: "registerNotify",
+                    key: 'registerNotify',
                     value: function registerNotify(fn) {
                       this.notify = fn;
                     },
                   },
                   {
-                    key: "status",
+                    key: 'status',
                     value: function status() {
                       return this.socketStatus;
                     },
                   },
                   {
-                    key: "open",
+                    key: 'open',
                     value: function open() {
                       var _this2 = this;
                       var customOptions =
-                        arguments.length > 0 && arguments[0] !== undefined
-                          ? arguments[0]
-                          : {};
+                        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
                       var options = mergeOptions$1(this.options, customOptions);
                       this.socketStatus = STATUS$1.IS_CONNECTING;
                       this.socket.bind(
@@ -4291,70 +3778,63 @@
                             host: options.wsServer.host,
                             port: options.wsServer.port,
                           });
-                          _this2.websocket.binaryType = "arraybuffer";
-                          _this2.websocket.on("listening", function () {
+                          _this2.websocket.binaryType = 'arraybuffer';
+                          _this2.websocket.on('listening', function () {
                             _this2.socketStatus = STATUS$1.IS_OPEN;
-                            _this2.notify("open");
+                            _this2.notify('open');
                           });
-                          _this2.websocket.on("error", function (error) {
-                            _this2.notify("error", error);
+                          _this2.websocket.on('error', function (error) {
+                            _this2.notify('error', error);
                           });
-                          _this2.websocket.on("connection", function (client) {
-                            client.on("message", function (message, rinfo) {
+                          _this2.websocket.on('connection', function (client) {
+                            client.on('message', function (message, rinfo) {
                               _this2.send(message, {
-                                receiver: "udp",
+                                receiver: 'udp',
                               });
                               _this2.notify(new Uint8Array(message), rinfo);
                             });
                           });
-                        }
+                        },
                       );
                     },
                   },
                   {
-                    key: "close",
+                    key: 'close',
                     value: function close() {
                       var _this3 = this;
                       this.socketStatus = STATUS$1.IS_CLOSING;
                       this.socket.close(function () {
                         _this3.websocket.close(function () {
                           _this3.socketStatus = STATUS$1.IS_CLOSED;
-                          _this3.notify("close");
+                          _this3.notify('close');
                         });
                       });
                     },
                   },
                   {
-                    key: "send",
+                    key: 'send',
                     value: function send(binary) {
                       var customOptions =
-                        arguments.length > 1 && arguments[1] !== undefined
-                          ? arguments[1]
-                          : {};
+                        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
                       var options = mergeOptions$1(this.options, customOptions);
                       var receiver = options.receiver;
-                      if (receiver === "udp") {
-                        var data =
-                          binary instanceof Buffer
-                            ? binary
-                            : Buffer.from(binary);
+                      if (receiver === 'udp') {
+                        var data = binary instanceof Buffer ? binary : Buffer.from(binary);
                         this.socket.send(
                           data,
                           0,
                           data.byteLength,
                           options.udpClient.port,
-                          options.udpClient.host
+                          options.udpClient.host,
                         );
-                      } else if (receiver === "ws") {
+                      } else if (receiver === 'ws') {
                         this.websocket.clients.forEach(function (client) {
                           client.send(binary, {
                             binary: true,
                           });
                         });
                       } else {
-                        throw new Error(
-                          "BridgePlugin can not send message to unknown receiver"
-                        );
+                        throw new Error('BridgePlugin can not send message to unknown receiver');
                       }
                     },
                   },
@@ -4362,11 +3842,9 @@
                 return BridgePlugin;
               })();
 
-              var scope = typeof global === "undefined" ? window : global;
+              var scope = typeof global === 'undefined' ? window : global;
               var WebSocket =
-                typeof __dirname === "undefined"
-                  ? scope.WebSocket
-                  : require("isomorphic-ws");
+                typeof __dirname === 'undefined' ? scope.WebSocket : require('isomorphic-ws');
               var STATUS$2 = {
                 IS_NOT_INITIALIZED: -1,
                 IS_CONNECTING: 0,
@@ -4375,7 +3853,7 @@
                 IS_CLOSED: 3,
               };
               var defaultOptions$3 = {
-                host: "localhost",
+                host: 'localhost',
                 port: 8080,
                 secure: false,
               };
@@ -4383,13 +3861,11 @@
                 function WebsocketClientPlugin(customOptions) {
                   _classCallCheck(this, WebsocketClientPlugin);
                   if (!WebSocket) {
-                    throw new Error(
-                      "WebsocketClientPlugin can't find a WebSocket class"
-                    );
+                    throw new Error("WebsocketClientPlugin can't find a WebSocket class");
                   }
                   this.options = _objectSpread2(
                     _objectSpread2({}, defaultOptions$3),
-                    customOptions
+                    customOptions,
                   );
                   this.socket = null;
                   this.socketStatus = STATUS$2.IS_NOT_INITIALIZED;
@@ -4397,67 +3873,66 @@
                 }
                 _createClass(WebsocketClientPlugin, [
                   {
-                    key: "registerNotify",
+                    key: 'registerNotify',
                     value: function registerNotify(fn) {
                       this.notify = fn;
                     },
                   },
                   {
-                    key: "status",
+                    key: 'status',
                     value: function status() {
                       return this.socketStatus;
                     },
                   },
                   {
-                    key: "open",
+                    key: 'open',
                     value: function open() {
                       var _this = this;
                       var customOptions =
-                        arguments.length > 0 && arguments[0] !== undefined
-                          ? arguments[0]
-                          : {};
-                      var options = _objectSpread2(
-                        _objectSpread2({}, this.options),
-                        customOptions
-                      );
+                        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                      var options = _objectSpread2(_objectSpread2({}, this.options), customOptions);
                       var port = options.port,
                         host = options.host,
-                        secure = options.secure;
+                        secure = options.secure,
+                        url = options.url;
                       if (this.socket) {
                         this.close();
                       }
-                      var protocol = secure ? "wss" : "ws";
+                      var protocol = secure ? 'wss' : 'ws';
                       var rinfo = {
                         address: host,
                         family: protocol,
                         port: port,
                         size: 0,
                       };
-                      if (port != null) {
+
+                      if (url) {
+                        if (!/^wss?:\/\//.test(url)) {
+                          throw new Error(
+                            'WebsocketClientPlugin url has to start with ws:// or wss://',
+                          );
+                        }
+                        this.socket = new WebSocket(url);
+                      } else if (port != null) {
                         this.socket = new WebSocket(
-                          ""
-                            .concat(protocol, "://")
-                            .concat(host, ":")
-                            .concat(port)
+                          ''.concat(protocol, '://').concat(host, ':').concat(port),
                         );
                       } else {
-                        this.socket = new WebSocket(
-                          "".concat(protocol, "://").concat(host)
-                        );
+                        this.socket = new WebSocket(''.concat(protocol, '://').concat(host));
                       }
 
-                      this.socket.binaryType = "arraybuffer";
+                      this.socket.binaryType = 'arraybuffer';
                       this.socketStatus = STATUS$2.IS_CONNECTING;
                       this.socket.onopen = function () {
                         _this.socketStatus = STATUS$2.IS_OPEN;
-                        _this.notify("open");
+                        _this.notify('open');
                       };
                       this.socket.onclose = function () {
                         _this.socketStatus = STATUS$2.IS_CLOSED;
-                        _this.notify("close");
+                        _this.notify('close');
                       };
                       this.socket.onerror = function (error) {
-                        _this.notify("error", error);
+                        _this.notify('error', error);
                       };
                       this.socket.onmessage = function (message) {
                         _this.notify(message.data, rinfo);
@@ -4465,14 +3940,14 @@
                     },
                   },
                   {
-                    key: "close",
+                    key: 'close',
                     value: function close() {
                       this.socketStatus = STATUS$2.IS_CLOSING;
                       this.socket.close();
                     },
                   },
                   {
-                    key: "send",
+                    key: 'send',
                     value: function send(binary) {
                       this.socket.send(binary);
                     },
@@ -4482,9 +3957,7 @@
               })();
 
               var WebSocketServer$1 =
-                typeof __dirname !== "undefined"
-                  ? require("isomorphic-ws").Server
-                  : undefined;
+                typeof __dirname !== 'undefined' ? require('isomorphic-ws').Server : undefined;
               var STATUS$3 = {
                 IS_NOT_INITIALIZED: -1,
                 IS_CONNECTING: 0,
@@ -4493,20 +3966,18 @@
                 IS_CLOSED: 3,
               };
               var defaultOptions$4 = {
-                host: "localhost",
+                host: 'localhost',
                 port: 8080,
               };
               var WebsocketServerPlugin = (function () {
                 function WebsocketServerPlugin(customOptions) {
                   _classCallCheck(this, WebsocketServerPlugin);
                   if (!WebSocketServer$1) {
-                    throw new Error(
-                      "WebsocketServerPlugin can not be used in browser context"
-                    );
+                    throw new Error('WebsocketServerPlugin can not be used in browser context');
                   }
                   this.options = _objectSpread2(
                     _objectSpread2({}, defaultOptions$4),
-                    customOptions
+                    customOptions,
                   );
                   this.socket = null;
                   this.socketStatus = STATUS$3.IS_NOT_INITIALIZED;
@@ -4514,34 +3985,29 @@
                 }
                 _createClass(WebsocketServerPlugin, [
                   {
-                    key: "registerNotify",
+                    key: 'registerNotify',
                     value: function registerNotify(fn) {
                       this.notify = fn;
                     },
                   },
                   {
-                    key: "status",
+                    key: 'status',
                     value: function status() {
                       return this.socketStatus;
                     },
                   },
                   {
-                    key: "open",
+                    key: 'open',
                     value: function open() {
                       var _this = this;
                       var customOptions =
-                        arguments.length > 0 && arguments[0] !== undefined
-                          ? arguments[0]
-                          : {};
-                      var options = _objectSpread2(
-                        _objectSpread2({}, this.options),
-                        customOptions
-                      );
+                        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                      var options = _objectSpread2(_objectSpread2({}, this.options), customOptions);
                       var port = options.port,
                         host = options.host;
                       var rinfo = {
                         address: host,
-                        family: "wsserver",
+                        family: 'wsserver',
                         port: port,
                         size: 0,
                       };
@@ -4552,35 +4018,35 @@
                         host: host,
                         port: port,
                       });
-                      this.socket.binaryType = "arraybuffer";
+                      this.socket.binaryType = 'arraybuffer';
                       this.socketStatus = STATUS$3.IS_CONNECTING;
-                      this.socket.on("listening", function () {
+                      this.socket.on('listening', function () {
                         _this.socketStatus = STATUS$3.IS_OPEN;
-                        _this.notify("open");
+                        _this.notify('open');
                       });
-                      this.socket.on("error", function (error) {
-                        _this.notify("error", error);
+                      this.socket.on('error', function (error) {
+                        _this.notify('error', error);
                       });
-                      this.socket.on("connection", function (client) {
-                        client.on("message", function (message) {
+                      this.socket.on('connection', function (client) {
+                        client.on('message', function (message) {
                           _this.notify(new Uint8Array(message), rinfo);
                         });
                       });
                     },
                   },
                   {
-                    key: "close",
+                    key: 'close',
                     value: function close() {
                       var _this2 = this;
                       this.socketStatus = STATUS$3.IS_CLOSING;
                       this.socket.close(function () {
                         _this2.socketStatus = STATUS$3.IS_CLOSED;
-                        _this2.notify("close");
+                        _this2.notify('close');
                       });
                     },
                   },
                   {
-                    key: "send",
+                    key: 'send',
                     value: function send(binary) {
                       this.socket.clients.forEach(function (client) {
                         client.send(binary, {
@@ -4608,22 +4074,14 @@
                 function OSC(options) {
                   _classCallCheck(this, OSC);
                   if (options && !isObject(options)) {
-                    throw new Error(
-                      "OSC options argument has to be an object."
-                    );
+                    throw new Error('OSC options argument has to be an object.');
                   }
-                  this.options = _objectSpread2(
-                    _objectSpread2({}, defaultOptions$5),
-                    options
-                  );
+                  this.options = _objectSpread2(_objectSpread2({}, defaultOptions$5), options);
                   this.eventHandler = new EventHandler({
                     discardLateMessages: this.options.discardLateMessages,
                   });
                   var eventHandler = this.eventHandler;
-                  if (
-                    this.options.plugin &&
-                    this.options.plugin.registerNotify
-                  ) {
+                  if (this.options.plugin && this.options.plugin.registerNotify) {
                     this.options.plugin.registerNotify(function () {
                       return eventHandler.notify.apply(eventHandler, arguments);
                     });
@@ -4631,92 +4089,62 @@
                 }
                 _createClass(OSC, [
                   {
-                    key: "on",
+                    key: 'on',
                     value: function on(eventName, callback) {
                       if (!(isString(eventName) && isFunction(callback))) {
                         throw new Error(
-                          "OSC on() needs event- or address string and callback function"
+                          'OSC on() needs event- or address string and callback function',
                         );
                       }
                       return this.eventHandler.on(eventName, callback);
                     },
                   },
                   {
-                    key: "off",
+                    key: 'off',
                     value: function off(eventName, subscriptionId) {
                       if (!(isString(eventName) && isInt(subscriptionId))) {
                         throw new Error(
-                          "OSC off() needs string and number (subscriptionId) to unsubscribe"
+                          'OSC off() needs string and number (subscriptionId) to unsubscribe',
                         );
                       }
                       return this.eventHandler.off(eventName, subscriptionId);
                     },
                   },
                   {
-                    key: "open",
+                    key: 'open',
                     value: function open(options) {
                       if (options && !isObject(options)) {
-                        throw new Error(
-                          "OSC open() options argument needs to be an object"
-                        );
+                        throw new Error('OSC open() options argument needs to be an object');
                       }
-                      if (
-                        !(
-                          this.options.plugin &&
-                          isFunction(this.options.plugin.open)
-                        )
-                      ) {
-                        throw new Error(
-                          "OSC Plugin API #open is not implemented!"
-                        );
+                      if (!(this.options.plugin && isFunction(this.options.plugin.open))) {
+                        throw new Error('OSC Plugin API #open is not implemented!');
                       }
                       return this.options.plugin.open(options);
                     },
                   },
                   {
-                    key: "status",
+                    key: 'status',
                     value: function status() {
-                      if (
-                        !(
-                          this.options.plugin &&
-                          isFunction(this.options.plugin.status)
-                        )
-                      ) {
-                        throw new Error(
-                          "OSC Plugin API #status is not implemented!"
-                        );
+                      if (!(this.options.plugin && isFunction(this.options.plugin.status))) {
+                        throw new Error('OSC Plugin API #status is not implemented!');
                       }
                       return this.options.plugin.status();
                     },
                   },
                   {
-                    key: "close",
+                    key: 'close',
                     value: function close() {
-                      if (
-                        !(
-                          this.options.plugin &&
-                          isFunction(this.options.plugin.close)
-                        )
-                      ) {
-                        throw new Error(
-                          "OSC Plugin API #close is not implemented!"
-                        );
+                      if (!(this.options.plugin && isFunction(this.options.plugin.close))) {
+                        throw new Error('OSC Plugin API #close is not implemented!');
                       }
                       return this.options.plugin.close();
                     },
                   },
                   {
-                    key: "send",
+                    key: 'send',
                     value: function send(packet, options) {
-                      if (
-                        !(
-                          this.options.plugin &&
-                          isFunction(this.options.plugin.send)
-                        )
-                      ) {
-                        throw new Error(
-                          "OSC Plugin API #send is not implemented!"
-                        );
+                      if (!(this.options.plugin && isFunction(this.options.plugin.send))) {
+                        throw new Error('OSC Plugin API #send is not implemented!');
                       }
                       if (
                         !(
@@ -4725,14 +4153,10 @@
                           packet instanceof Packet
                         )
                       ) {
-                        throw new Error(
-                          "OSC send() needs Messages, Bundles or Packets"
-                        );
+                        throw new Error('OSC send() needs Messages, Bundles or Packets');
                       }
                       if (options && !isObject(options)) {
-                        throw new Error(
-                          "OSC send() options argument has to be an object"
-                        );
+                        throw new Error('OSC send() options argument has to be an object');
                       }
                       return this.options.plugin.send(packet.pack(), options);
                     },
@@ -4754,20 +4178,20 @@
           }).call(this);
         }).call(
           this,
-          typeof global !== "undefined"
+          typeof global !== 'undefined'
             ? global
-            : typeof self !== "undefined"
-            ? self
-            : typeof window !== "undefined"
-            ? window
-            : {},
-          require("buffer").Buffer,
-          "/node_modules/osc-js/lib"
+            : typeof self !== 'undefined'
+              ? self
+              : typeof window !== 'undefined'
+                ? window
+                : {},
+          require('buffer').Buffer,
+          '/node_modules/osc-js/lib',
         );
       },
-      { buffer: 3, dgram: 1, "isomorphic-ws": 6 },
+      { buffer: 3, dgram: 1, 'isomorphic-ws': 6 },
     ],
   },
   {},
-  [5]
+  [5],
 );
