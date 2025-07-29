@@ -1,5 +1,6 @@
 {
-  "name": "sample-plugin",
+  "name":"sample_plugin",
+  "display_name": "Sample Plugin",
   "version": "1.0.0",
   "spooder-version": "0.5.0",
   "description": "Use this as a template for making plugins. When it's ready, you can export it in the web UI.",
