@@ -2271,6 +2271,12 @@
                       type: window.location.pathname.split('/')[1],
                     }),
                   );
+                  oscConnected = true;
+                  oscConnecting = false;
+                  setAlertToGreen();
+                  setTimeout(() => {
+                    alertDiv.style.opacity = '0.0';
+                  }, 3000);
                 }
               } else {
                 if (oscConnected) {
