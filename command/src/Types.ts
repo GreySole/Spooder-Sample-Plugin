@@ -21,6 +21,7 @@ export interface StreamMessage {
   isVIP: boolean;
   isFirstMessage: boolean;
   isReturningChatter: boolean;
+  shareId?: string;
   triggeredEventData?: KeyedObject;
   platformEventData?: KeyedObject;
   pluginEventData?: KeyedObject;
@@ -39,6 +40,7 @@ export interface PluginModule {
   osc: PluginOscInfo;
   public: PluginPublicInfo;
   chat: PluginChatInfo;
+  subscribeToModuleEvent: (eventName: string, callback: Function) => void;
   registerPluginApi: (
     router: "local" | "public",
     method: "get" | "post" | "put" | "delete",
@@ -48,14 +50,24 @@ export interface PluginModule {
   getActiveViewer: (req: Request) => KeyedObject | undefined;
   getAssetPath: (assetPath: string) => string;
   getLocalFilePath: (filePath: string) => string;
-  settings: KeyedObject;
-  onSettings: (settings: KeyedObject) => void;
-  onLoad: () => void;
-  onDestroy: () => void;
-  onChat: (message: StreamMessage) => void;
-  onCommunityChat: (type: string, data: any) => void;
-  onOSC: (message: OSCMessage) => void;
-  onEvent: (event: string, data: KeyedObject) => void;
+  getSettings: () => KeyedObject | undefined;
+  setSettings: (settings: KeyedObject) => void;
+  getShareSettings: (shareId: string) => KeyedObject | undefined;
+  setShareSettings: (shareId: string, settings: KeyedObject) => void;
+  getSettingsForm: () => KeyedObject | undefined;
+  setSettingsForm: (form: KeyedObject) => void;
+  getEventsForm: () => KeyedObject | undefined;
+  setEventsForm: (form: KeyedObject) => void;
+  getOverlayUrl: () => string;
+  getUtilityUrl: () => string;
+  settings?: KeyedObject;
+  onSettings?: (settings: KeyedObject) => void;
+  onLoad?: () => void;
+  onDestroy?: () => void;
+  onChat?: (message: StreamMessage) => void;
+  onCommunityChat?: (type: string, data: any) => void;
+  onOSC?: (message: OSCMessage) => void;
+  onEvent?: (event: string, data: KeyedObject) => void;
   registerExtra: (key: string, value: any) => void;
 }
 
