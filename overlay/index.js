@@ -22,7 +22,7 @@ function getOSCMessage(message){
     }
 }
 
-function onConnect(){
+function onOSCOpen(){
     console.log("OSC CONNECTED!");
     document.querySelector("#oscInfo").innerHTML = "OSC Connected!<br>Here's the info:<br>IP: "+oscIP+"<br>Port: "+oscPort+"<br>Settings: "+JSON.stringify(pluginSettings);
 }
