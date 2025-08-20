@@ -2197,13 +2197,18 @@
         getOSCSettings();
 
         async function getOSCSettings() {
+          window.getApiUrl = (endpoint) => {
+            const realEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+            return window.location.origin + '/plugin/api/' + pluginName + realEndpoint;
+          };
           window.getAssetUrl = (asset) => {
             return window.location.origin + '/assets/' + pluginName + '/' + asset;
           };
-          window.getApiUrl = (endpoint) => {
-            const realEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
-            return window.location.origin + '/api/' + pluginName + realEndpoint;
+          //Backward compatibility
+          window.getAssetPath = (asset) => {
+            return window.location.origin + '/assets/' + pluginName + '/' + asset;
           };
+
           const urlParams = new URLSearchParams(window.location.search);
           const key = urlParams.get('key');
           const oscSettingsRaw = await fetch(
