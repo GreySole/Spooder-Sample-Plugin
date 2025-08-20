@@ -2114,7 +2114,7 @@
     ],
     5: [
       function (require, module, exports) {
-        const SpooderVersion = '0.5.7';
+        const SpooderVersion = '0.5.8';
         const OSC = require('osc-js');
         console.log('OSC GET');
 
