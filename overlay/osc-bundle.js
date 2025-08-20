@@ -2114,7 +2114,7 @@
     ],
     5: [
       function (require, module, exports) {
-        const SpooderVersion = '0.5.0';
+        const SpooderVersion = '0.5.8';
         const OSC = require('osc-js');
         console.log('OSC GET');
 
@@ -2197,13 +2197,25 @@
         getOSCSettings();
 
         async function getOSCSettings() {
+          window.getApiUrl = (endpoint) => {
+            const realEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+            return window.location.origin + '/plugin/api/' + pluginName + realEndpoint;
+          };
+          window.getAssetUrl = (asset) => {
+            return window.location.origin + '/assets/' + pluginName + '/' + asset;
+          };
+          //Backward compatibility
           window.getAssetPath = (asset) => {
             return window.location.origin + '/assets/' + pluginName + '/' + asset;
           };
+
           const urlParams = new URLSearchParams(window.location.search);
           const key = urlParams.get('key');
           const oscSettingsRaw = await fetch(
-            window.location.origin + '/plugin/get?plugin=' + pluginName + '&key=' + key,
+            window.location.origin +
+              '/plugin/get?plugin=' +
+              pluginName +
+              (key ? '&key=' + key : ''),
           ).then((response) => response.json());
           if (!oscSettingsRaw || !oscSettingsRaw.express) {
             console.error('OSC settings not found for plugin:', pluginName);
