@@ -40,7 +40,7 @@ export interface PluginModule {
   osc: PluginOscInfo;
   public: PluginPublicInfo;
   chat: PluginChatInfo;
-  subscribeToModuleEvent: (eventName: string, callback: Function) => void;
+  getModule: (name: string) => KeyedObject | undefined;
   registerPluginApi: (
     router: "local" | "public",
     method: "get" | "post" | "put" | "delete",
@@ -49,6 +49,7 @@ export interface PluginModule {
   ) => void;
   getActiveViewer: (req: Request) => KeyedObject | undefined;
   getAssetPath: (assetPath: string) => string;
+  getAssetUrl: (assetPath: string) => string;
   getLocalFilePath: (filePath: string) => string;
   getSettings: () => KeyedObject | undefined;
   setSettings: (settings: KeyedObject) => void;
@@ -78,10 +79,20 @@ export interface OSCMessage {
   args: MessageArgValue[];
 }
 
+export interface IntegrationModuleCollection {
+  [key: string]: IntegrationModule;
+}
+
+export interface IntegrationModule {
+  subscribeToModuleEvent: (eventName: string, callback: Function) => void;
+  [key: string]: any;
+}
+
 export interface PluginSpooderModules {
-  stream: KeyedObject;
-  community: KeyedObject;
-  control: KeyedObject;
+  stream: IntegrationModuleCollection;
+  community: IntegrationModuleCollection;
+  control: IntegrationModuleCollection;
+  [key: string]: IntegrationModuleCollection;
 }
 
 export interface PluginPublicInfo {

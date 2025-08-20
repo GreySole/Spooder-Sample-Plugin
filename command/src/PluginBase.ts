@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  IntegrationModule,
   KeyedObject,
   OSCMessage,
   PluginChatInfo,
@@ -62,12 +63,21 @@ export default class PluginBase implements Partial<PluginModule> {
     // Default implementation does nothing
   }
 
+  getModule(name: string): IntegrationModule | undefined {
+    return undefined;
+  }
+
   getActiveViewer(req: Request): KeyedObject | undefined {
     // Default implementation returns undefined
     return undefined;
   }
 
   getAssetPath(assetPath: string): string {
+    // Default implementation returns an empty string
+    return "";
+  }
+
+  getAssetUrl(assetPath: string): string {
     // Default implementation returns an empty string
     return "";
   }
