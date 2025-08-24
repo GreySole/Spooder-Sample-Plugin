@@ -2116,6 +2116,7 @@
       function (require, module, exports) {
         const SpooderVersion = '0.5.8';
         const OSC = require('osc-js');
+        const urlParams = new URLSearchParams(window.location.search);
         console.log('OSC GET');
 
         var osc = null;
@@ -2166,7 +2167,9 @@
 
         document.onreadystatechange = function () {
           if (document.readyState === 'complete') {
-            document.body.appendChild(alertDiv);
+            if(urlParams.get("debug")){
+              document.body.appendChild(alertDiv);
+            }
           }
         };
 
@@ -2209,7 +2212,7 @@
             return window.location.origin + '/assets/' + pluginName + '/' + asset;
           };
 
-          const urlParams = new URLSearchParams(window.location.search);
+          
           const key = urlParams.get('key');
           const oscSettingsRaw = await fetch(
             window.location.origin +
